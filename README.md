@@ -112,13 +112,13 @@ Counter-App/
 - 所有用户可读
 - 仅创建者可读写
 
-### 4. 上传云函数
+### 4. 上传云函数（重要！）
 在微信开发者工具中：
 1. 右键点击 `cloudfunctions` 目录
 2. 选择「当前环境」-> 选择你的云开发环境
 3. 右键点击每个云函数目录，选择「上传并部署：云端安装依赖」
 
-需要上传的云函数：
+**必须上传以下所有云函数，否则小程序无法正常工作：**
 - createRoom
 - joinRoom
 - addPlayer
@@ -127,6 +127,8 @@ Counter-App/
 - updateScore
 - updatePlayerName
 - resetScores
+
+**如果看到 "FunctionName parameter could not be found" 错误，说明云函数未正确上传，请重新上传所有云函数。**
 
 ### 5. 编译预览
 1. 点击微信开发者工具的「编译」按钮

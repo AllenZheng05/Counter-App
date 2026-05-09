@@ -111,6 +111,13 @@ Page({
     }
   },
 
+  // 跳转到创建房间页面
+  goToCreate() {
+    wx.navigateTo({
+      url: '/pages/create/create'
+    })
+  },
+
   onShareAppMessage() {
     return {
       title: '纸牌游戏计分器 - 快来加入我的房间！',

@@ -4,7 +4,7 @@ Page({
   data: {
     roomName: '',
     maxPlayers: 4,
-    maxPlayersOptions: [2, 3, 4, 5, 6, 7, 8, 9, 10],
+    maxPlayersOptions: [2, 3, 4, 5, 6, 7, 8],
     creating: false
   },
 
