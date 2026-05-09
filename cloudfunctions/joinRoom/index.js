@@ -38,9 +38,15 @@ exports.main = async (event, context) => {
     // 检查用户是否已在房间中
     const alreadyInRoom = room.players.some(p => p.userId === wxContext.OPENID)
     if (alreadyInRoom) {
+      // 用户已经在房间中，返回房间信息让用户可以直接返回
       return {
-        success: false,
-        error: '你已在该房间中'
+        success: true,
+        alreadyInRoom: true,
+        room: {
+          _id: room._id,
+          inviteCode: room.inviteCode,
+          roomName: room.roomName
+        }
       }
     }
 

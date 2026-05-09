@@ -44,7 +44,8 @@ Page({
     this.setData({ checkingRoom: true })
 
     const roomId = app.globalData.currentRoom._id
-    const userOpenId = app.globalData.userInfo.openId
+    // 使用 openId 或 nickName 作为用户标识（getUserProfile 返回的信息中没有 openId）
+    const userId = app.globalData.userInfo.openId || app.globalData.userInfo.nickName
 
     // 查询房间，检查用户是否还在玩家列表中
     db.collection('rooms').doc(roomId).get().then(res => {
@@ -55,7 +56,7 @@ Page({
         const players = room.players || []
         
         // 检查当前用户是否还在房间中
-        const isInRoom = players.some(p => p.userId === userOpenId)
+        const isInRoom = players.some(p => p.userId === userId)
         
         if (isInRoom) {
           this.setData({

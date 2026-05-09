@@ -76,9 +76,25 @@ Page({
           roomName: room.roomName
         }
 
-        wx.redirectTo({
-          url: `/pages/room/room?roomId=${room._id}&inviteCode=${room.inviteCode}`
-        })
+        // 如果用户已经在房间中，提示并返回
+        if (res.result.alreadyInRoom) {
+          wx.showModal({
+            title: '您已在房间中',
+            content: `房间：${room.roomName}\n房间号：${room.inviteCode}\n是否返回房间？`,
+            confirmText: '返回房间',
+            success: (modalRes) => {
+              if (modalRes.confirm) {
+                wx.redirectTo({
+                  url: `/pages/room/room?roomId=${room._id}&inviteCode=${room.inviteCode}`
+                })
+              }
+            }
+          })
+        } else {
+          wx.redirectTo({
+            url: `/pages/room/room?roomId=${room._id}&inviteCode=${room.inviteCode}`
+          })
+        }
       } else {
         wx.showToast({
           title: (res.result && res.result.error) || '加入失败',
