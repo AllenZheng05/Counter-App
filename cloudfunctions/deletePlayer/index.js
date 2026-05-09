@@ -42,6 +42,16 @@ exports.main = async (event, context) => {
       return newRound
     })
 
+    // 如果删除后没有玩家了，自动解散房间（删除房间）
+    if (updatedPlayers.length === 0) {
+      await db.collection('rooms').doc(roomId).remove()
+      return {
+        success: true,
+        roomDeleted: true
+      }
+    }
+
+    // 否则只更新玩家列表和分数
     await db.collection('rooms').doc(roomId).update({
       data: {
         players: updatedPlayers,
@@ -51,7 +61,8 @@ exports.main = async (event, context) => {
     })
 
     return {
-      success: true
+      success: true,
+      roomDeleted: false
     }
   } catch (err) {
     console.error('删除玩家失败:', err)

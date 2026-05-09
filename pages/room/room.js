@@ -216,6 +216,24 @@ Page({
                 title: (res.result && res.result.error) || '删除失败',
                 icon: 'none'
               })
+            } else {
+              // 如果房间被自动解散（没有玩家了），则返回上一页
+              if (res.result.roomDeleted) {
+                wx.showToast({
+                  title: '房间已自动解散',
+                  icon: 'success'
+                })
+                setTimeout(() => {
+                  wx.navigateBack({
+                    delta: 1,
+                    fail: () => {
+                      wx.switchTab({
+                        url: '/pages/index/index'
+                      })
+                    }
+                  })
+                }, 1500)
+              }
             }
           }).catch(err => {
             console.error('删除玩家失败:', err)
