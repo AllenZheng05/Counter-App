@@ -173,16 +173,29 @@
 /* 分数单元格 */
 .score-cell {
   flex: 1;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-right: 2rpx solid #f0f0f0;
   transition: background-color 0.2s;
+  position: relative;
 }
 
 .score-cell:last-child {
   border-right: none;
 }
 
-.score-cell:active {
+.score-cell-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 20rpx 24rpx;
+  border-radius: 8rpx;
+  transition: background-color 0.2s;
+}
+
+.score-cell-inner:active {
   background-color: #f0f0f0;
 }
 
@@ -198,6 +211,41 @@
 
 .score-cell.negative .score-value {
   color: #e74c3c;
+}
+
+/* 正负号切换按钮 */
+.score-sign-toggle {
+  position: absolute;
+  right: 12rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.06);
+  border-radius: 50%;
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.score-sign-toggle:active {
+  background-color: rgba(0, 0, 0, 0.15);
+  transform: translateY(-50%) scale(0.92);
+}
+
+.score-sign-toggle.positive {
+  color: #27ae60;
+  background-color: rgba(39, 174, 96, 0.12);
+}
+
+.score-sign-toggle.negative {
+  color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.12);
 }
 
 /* 总分行 */

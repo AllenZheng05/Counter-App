@@ -66,11 +66,16 @@
             wx:for="{{players}}" 
             wx:key="id"
             wx:for-index="pIndex"
-            bindtap="showEditScore"
-            data-roundindex="{{roundIndex}}"
-            data-playerindex="{{pIndex}}"
           >
-            <text class="score-value {{scoreClassList[roundIndex + '-' + pIndex]}}">{{scoreValues[roundIndex + '-' + pIndex]}}</text>
+            <view class="score-cell-inner" bindtap="showEditScore" data-roundindex="{{roundIndex}}" data-playerindex="{{pIndex}}">
+              <text class="score-value {{scoreClassList[roundIndex + '-' + pIndex]}}">{{scoreValues[roundIndex + '-' + pIndex]}}</text>
+            </view>
+            <view 
+              class="score-sign-toggle {{scoreClassList[roundIndex + '-' + pIndex]}}"
+              bindtap="toggleScoreSignOnCell"
+              data-roundindex="{{roundIndex}}"
+              data-playerindex="{{pIndex}}"
+            >±</view>
           </view>
         </view>
 

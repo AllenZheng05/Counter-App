@@ -309,11 +309,55 @@ Page({
     })
   },
 
-  // 切换分数正负号
+  // 切换分数正负号（弹窗内）
   toggleScoreSign(e) {
     const sign = e.currentTarget.dataset.sign
     this.setData({
       scoreSign: sign
+    })
+  },
+
+  // 在格子上直接切换正负号
+  toggleScoreSignOnCell(e) {
+    const roundIndex = e.currentTarget.dataset.roundindex
+    const playerIndex = e.currentTarget.dataset.playerindex
+    
+    const currentScore = this.data.scores[roundIndex] ? 
+      (this.data.scores[roundIndex][playerIndex] || 0) : 0
+    
+    // 如果当前分数是0，不做任何操作
+    if (currentScore === 0) {
+      wx.showToast({
+        title: '分数为0，无需切换',
+        icon: 'none'
+      })
+      return
+    }
+    
+    // 取反分数
+    const newScore = -currentScore
+    
+    wx.cloud.callFunction({
+      name: 'updateScore',
+      data: {
+        roomId: this.data.roomId,
+        roundIndex: roundIndex,
+        playerIndex: playerIndex,
+        score: newScore
+      }
+    }).then(res => {
+      if (!res.result || !res.result.success) {
+        wx.showToast({
+          title: res.result?.error || '更新失败',
+          icon: 'none'
+        })
+      }
+    }).catch(err => {
+      console.error('切换正负号失败:', err)
+      wx.showToast({
+        title: '更新失败',
+        icon: 'none'
+      })
     })
   },
 
