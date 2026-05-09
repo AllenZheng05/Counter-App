@@ -41,7 +41,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.19.4",
-  "appid": "wxxxxxxxxxxx",
+  "appid": "wxd4246327f2b6e16a",
   "projectname": "counter-app",
   "cloudfunctionRoot": "cloudfunctions/",
   "condition": {},
