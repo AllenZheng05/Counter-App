@@ -140,15 +140,28 @@
           bindinput="onEditInput"
           focus
         />
-        <input 
-          class="edit-input" 
-          type="number"
-          wx:else
-          placeholder="请输入分数"
-          value="{{editValue}}"
-          bindinput="onEditInput"
-          focus
-        />
+        <view wx:else class="score-edit-wrapper">
+          <view class="score-sign-btns">
+            <view 
+              class="sign-btn {{scoreSign === '+' ? 'active' : ''}}" 
+              data-sign="+"
+              bindtap="toggleScoreSign"
+            >+</view>
+            <view 
+              class="sign-btn {{scoreSign === '-' ? 'active' : ''}}" 
+              data-sign="-"
+              bindtap="toggleScoreSign"
+            >-</view>
+          </view>
+          <input 
+            class="edit-input score-input" 
+            type="number"
+            placeholder="请输入分数"
+            value="{{editValue}}"
+            bindinput="onEditInput"
+            focus
+          />
+        </view>
       </view>
 
       <view class="modal-footer">

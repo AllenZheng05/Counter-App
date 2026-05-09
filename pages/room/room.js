@@ -21,7 +21,8 @@ Page({
     editType: '',    // 'playerName' | 'score'
     editRoundIndex: -1,
     editPlayerIndex: -1,
-    editValue: ''
+    editValue: '',
+    scoreSign: '+'   // '+' or '-'
   },
 
   // 实时监听房间数据
@@ -283,12 +284,17 @@ Page({
     const currentScore = this.data.scores[roundIndex] ? 
       (this.data.scores[roundIndex][playerIndex] || 0) : 0
     
+    // 判断当前分数是正数还是负数
+    const scoreSign = currentScore >= 0 ? '+' : '-'
+    const absScore = Math.abs(currentScore)
+    
     this.setData({
       showEditModal: true,
       editType: 'score',
       editRoundIndex: roundIndex,
       editPlayerIndex: playerIndex,
-      editValue: currentScore.toString()
+      editValue: absScore.toString(),
+      scoreSign: scoreSign
     })
   },
 
@@ -303,12 +309,20 @@ Page({
     })
   },
 
+  // 切换分数正负号
+  toggleScoreSign(e) {
+    const sign = e.currentTarget.dataset.sign
+    this.setData({
+      scoreSign: sign
+    })
+  },
+
   // 输入编辑值
   onEditInput(e) {
     let value = e.detail.value
-    // 分数可以是负数
+    // 分数只能是数字
     if (this.data.editType === 'score') {
-      value = value.replace(/[^\-0-9]/g, '')
+      value = value.replace(/[^0-9]/g, '')
     } else {
       value = value.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, '').substring(0, 10)
     }
@@ -364,7 +378,7 @@ Page({
     } else if (this.data.editType === 'score') {
       // 修改分数
       const scoreValue = parseInt(value)
-      if (isNaN(scoreValue)) {
+      if (isNaN(scoreValue) || scoreValue === 0) {
         wx.showToast({
           title: '请输入有效数字',
           icon: 'none'
@@ -372,19 +386,22 @@ Page({
         return
       }
 
+      // 根据符号决定正负
+      const finalScore = this.data.scoreSign === '-' ? -scoreValue : scoreValue
+
       wx.cloud.callFunction({
         name: 'updateScore',
         data: {
           roomId: this.data.roomId,
           roundIndex: this.data.editRoundIndex,
           playerIndex: this.data.editPlayerIndex,
-          score: scoreValue
+          score: finalScore
         }
       }).then(res => {
         this.hideEditModal()
         if (!res.result || !res.result.success) {
           wx.showToast({
-            title: (res.result && res.result.error) || '更新失败',
+            title: res.result?.error || '更新失败',
             icon: 'none'
           })
         }
