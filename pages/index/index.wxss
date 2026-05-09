@@ -81,6 +81,54 @@
   color: #1a1a2e;
 }
 
+/* 返回房间区域 */
+.return-section {
+  margin-bottom: 24rpx;
+}
+
+.return-card {
+  display: flex;
+  align-items: center;
+  padding: 36rpx 24rpx;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 24rpx rgba(76, 175, 80, 0.3);
+  transition: transform 0.2s;
+}
+
+.return-card:active {
+  transform: scale(0.98);
+}
+
+.return-icon {
+  font-size: 56rpx;
+  margin-right: 24rpx;
+}
+
+.return-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.return-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8rpx;
+}
+
+.return-desc {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.return-arrow {
+  font-size: 48rpx;
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: 16rpx;
+}
+
 /* 功能按钮区域 */
 .action-section {
   flex: 1;

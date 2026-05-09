@@ -549,16 +549,36 @@ Page({
   leaveRoom() {
     wx.showModal({
       title: '确认离开',
-      content: '离开房间后将返回主页',
+      content: '离开房间后将从玩家列表中移除，房间将返回主页',
       success: (res) => {
         if (res.confirm) {
-          wx.navigateBack({
-            delta: 2,
-            fail: () => {
-              wx.switchTab({
-                url: '/pages/index/index'
-              })
+          // 调用云函数从房间移除当前用户
+          wx.cloud.callFunction({
+            name: 'leaveRoom',
+            data: {
+              roomId: this.data.roomId
             }
+          }).then(res => {
+            // 无论成功失败都返回主页
+            wx.navigateBack({
+              delta: 2,
+              fail: () => {
+                wx.switchTab({
+                  url: '/pages/index/index'
+                })
+              }
+            })
+          }).catch(err => {
+            console.error('离开房间失败:', err)
+            // 即使云函数调用失败也返回主页
+            wx.navigateBack({
+              delta: 2,
+              fail: () => {
+                wx.switchTab({
+                  url: '/pages/index/index'
+                })
+              }
+            })
           })
         }
       }
