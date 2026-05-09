@@ -95,13 +95,15 @@
         </view>
       </view>
 
+      <!-- 加载状态 -->
+      <view class="loading-state" wx:if="{{isLoading}}">
+        <text class="loading-icon">⏳</text>
+        <text class="loading-text">加载中...</text>
+      </view>
       <!-- 空状态 -->
-      <view class="empty-state" wx:if="{{players.length === 0}}">
+      <view class="empty-state" wx:if="{{!isLoading && players.length === 0}}">
         <text class="empty-icon">📋</text>
         <text class="empty-text">暂无玩家，请先添加玩家</text>
-        <button class="btn-primary mt-20" bindtap="addPlayer">
-          添加玩家
-        </button>
       </view>
     </view>
   </view>

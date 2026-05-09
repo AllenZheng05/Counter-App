@@ -22,7 +22,8 @@ Page({
     editRoundIndex: -1,
     editPlayerIndex: -1,
     editValue: '',
-    scoreSign: '+'   // '+' or '-'
+    scoreSign: '+',   // '+' or '-'
+    isLoading: true   // 数据加载状态
   },
 
   // 实时监听房间数据
@@ -72,6 +73,10 @@ Page({
     
     this.roomWatcher = db.collection('rooms').doc(roomId).watch({
       onChange: (snapshot) => {
+        // 首次加载完成后，关闭加载状态
+        if (this.data.isLoading) {
+          this.setData({ isLoading: false })
+        }
         if (snapshot.docs.length > 0) {
           const room = snapshot.docs[0]
           const players = room.players || []
