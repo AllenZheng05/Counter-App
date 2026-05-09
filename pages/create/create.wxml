@@ -27,7 +27,7 @@
       <picker 
         mode="selector" 
         range="{{maxPlayersOptions}}" 
-        value="{{maxPlayers - 2}}"
+        value="{{maxPlayersIndex}}"
         bindchange="onMaxPlayersChange"
       >
         <view class="picker-display">

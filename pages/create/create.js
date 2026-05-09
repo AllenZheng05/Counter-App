@@ -5,6 +5,7 @@ Page({
     roomName: '',
     maxPlayers: 4,
     maxPlayersOptions: [2, 3, 4, 5, 6, 7, 8],
+    maxPlayersIndex: 2,  // 默认选中4人（索引2）
     creating: false
   },
 
@@ -26,8 +27,10 @@ Page({
 
   // 选择最大玩家数
   onMaxPlayersChange(e) {
+    const index = parseInt(e.detail.value)
     this.setData({
-      maxPlayers: parseInt(e.detail.value)
+      maxPlayers: parseInt(this.data.maxPlayersOptions[index]),
+      maxPlayersIndex: index
     })
   },
 
