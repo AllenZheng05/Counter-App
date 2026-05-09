@@ -27,18 +27,6 @@
     </view>
   </view>
 
-  <!-- 返回房间按钮（只在误退出时显示） -->
-  <view class="return-section" wx:if="{{showReturnRoom}}">
-    <view class="return-card card" bindtap="returnToRoom">
-      <view class="return-icon">↩️</view>
-      <view class="return-text">
-        <text class="return-title">返回房间</text>
-        <text class="return-desc">继续 {{returnRoomInfo.roomName}} 的计分</text>
-      </view>
-      <view class="return-arrow">›</view>
-    </view>
-  </view>
-
   <!-- 主要功能按钮 -->
   <view class="action-section" wx:if="{{hasUserInfo}}">
     <view class="action-card card" bindtap="goToCreate">
@@ -50,7 +38,17 @@
       <view class="action-arrow">›</view>
     </view>
 
-    <view class="action-card card" bindtap="goToJoin">
+    <!-- 如果已在房间中，显示返回房间按钮；否则显示加入房间按钮 -->
+    <view class="action-card card return-card" wx:if="{{showReturnRoom}}" bindtap="returnToRoom">
+      <view class="action-icon">↩️</view>
+      <view class="action-text">
+        <text class="action-title">返回房间</text>
+        <text class="action-desc">继续 {{returnRoomInfo.roomName}} 的计分</text>
+      </view>
+      <view class="action-arrow">›</view>
+    </view>
+
+    <view class="action-card card" wx:else bindtap="goToJoin">
       <view class="action-icon">🚪</view>
       <view class="action-text">
         <text class="action-title">加入房间</text>

@@ -371,7 +371,7 @@ Page({
     }).then(res => {
       if (!res.result || !res.result.success) {
         wx.showToast({
-          title: res.result?.error || '更新失败',
+          title: (!res.result || !res.result.success) || '更新失败',
           icon: 'none'
         })
       }
@@ -468,7 +468,7 @@ Page({
         this.hideEditModal()
         if (!res.result || !res.result.success) {
           wx.showToast({
-            title: res.result?.error || '更新失败',
+            title: (!res.result || !res.result.success) || '更新失败',
             icon: 'none'
           })
         }
