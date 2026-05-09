@@ -176,7 +176,7 @@ Page({
     }).then(res => {
       if (!res.result || !res.result.success) {
         wx.showToast({
-          title: res.result?.error || '添加失败',
+          title: (res.result && res.result.error) || '添加失败',
           icon: 'none'
         })
       }
@@ -207,7 +207,7 @@ Page({
           }).then(res => {
             if (!res.result || !res.result.success) {
               wx.showToast({
-                title: res.result?.error || '删除失败',
+                title: (res.result && res.result.error) || '删除失败',
                 icon: 'none'
               })
             }
@@ -248,7 +248,7 @@ Page({
     }).then(res => {
       if (!res.result || !res.result.success) {
         wx.showToast({
-          title: res.result?.error || '添加失败',
+          title: (res.result && res.result.error) || '添加失败',
           icon: 'none'
         })
       }
@@ -350,7 +350,7 @@ Page({
         this.hideEditModal()
         if (!res.result || !res.result.success) {
           wx.showToast({
-            title: res.result?.error || '更新失败',
+            title: (res.result && res.result.error) || '更新失败',
             icon: 'none'
           })
         }
@@ -384,7 +384,7 @@ Page({
         this.hideEditModal()
         if (!res.result || !res.result.success) {
           wx.showToast({
-            title: res.result?.error || '更新失败',
+            title: (res.result && res.result.error) || '更新失败',
             icon: 'none'
           })
         }
@@ -421,7 +421,7 @@ Page({
           }).then(res => {
             if (!res.result || !res.result.success) {
               wx.showToast({
-                title: res.result?.error || '重置失败',
+                title: (res.result && res.result.error) || '重置失败',
                 icon: 'none'
               })
             }

@@ -81,7 +81,7 @@ Page({
         })
       } else {
         wx.showToast({
-          title: res.result?.error || '加入失败',
+          title: (res.result && res.result.error) || '加入失败',
           icon: 'none'
         })
       }
