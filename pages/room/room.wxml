@@ -1,0 +1,153 @@
+<!--pages/room/room.wxml-->
+<view class="container">
+  <!-- 顶部房间信息 -->
+  <view class="room-header">
+    <view class="room-info">
+      <view class="room-name">{{room?.roomName || '加载中...'}}</view>
+      <view class="room-code" bindtap="copyInviteCode">
+        <text>房间号：{{inviteCode}}</text>
+        <text class="copy-icon">📋</text>
+      </view>
+    </view>
+    <view class="room-actions">
+      <button class="icon-btn" bindtap="shareRoom" open-type="share">
+        <text>📤</text>
+      </button>
+      <button class="icon-btn" bindtap="leaveRoom">
+        <text>🚪</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 计分表格区域 -->
+  <view class="score-table-section">
+    <!-- 表格容器 -->
+    <view class="table-wrapper">
+      <view class="score-table">
+        <!-- 表头：玩家名称行 -->
+        <view class="table-row header-row">
+          <view class="table-cell row-label">
+            <text>玩家</text>
+          </view>
+          <view 
+            class="table-cell player-name-cell" 
+            wx:for="{{players}}" 
+            wx:key="id"
+            wx:for-index="pIndex"
+          >
+            <view class="player-name-wrapper">
+              <text class="player-name" bindtap="showEditPlayerName" data-index="{{pIndex}}">
+                {{item.name}}
+              </text>
+              <button 
+                class="delete-player-btn" 
+                bindtap="deletePlayer" 
+                data-index="{{pIndex}}"
+                wx:if="{{isCreator && players.length > 1}}"
+              >
+                ✕
+              </button>
+            </view>
+          </view>
+        </view>
+
+        <!-- 数据行：每一局的分数 -->
+        <view 
+          class="table-row data-row" 
+          wx:for="{{scores}}" 
+          wx:key="roundIndex"
+          wx:for-index="roundIndex"
+        >
+          <view class="table-cell row-label round-label">
+            <text>第{{roundIndex + 1}}局</text>
+          </view>
+          <view 
+            class="table-cell score-cell {{item[pIndex] < 0 ? 'negative' : item[pIndex] > 0 ? 'positive' : ''}}" 
+            wx:for="{{players}}" 
+            wx:key="id"
+            wx:for-index="pIndex"
+            bindtap="showEditScore"
+            data-roundindex="{{roundIndex}}"
+            data-playerindex="{{pIndex}}"
+          >
+            <text class="score-value">{{item[pIndex] || 0}}</text>
+          </view>
+        </view>
+
+        <!-- 总分行 -->
+        <view class="table-row total-row">
+          <view class="table-cell row-label total-label">
+            <text>总分</text>
+          </view>
+          <view 
+            class="table-cell total-cell" 
+            wx:for="{{players}}" 
+            wx:key="id"
+            wx:for-index="pIndex"
+          >
+            <text class="total-value {{totals[pIndex] < 0 ? 'negative' : totals[pIndex] > 0 ? 'positive' : ''}}">
+              {{totals[pIndex] > 0 ? '+' : ''}}{{totals[pIndex] || 0}}
+            </text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty-state" wx:if="{{players.length === 0}}">
+        <text class="empty-icon">📋</text>
+        <text class="empty-text">暂无玩家，请先添加玩家</text>
+        <button class="btn-primary mt-20" bindtap="addPlayer">
+          添加玩家
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮区域 -->
+  <view class="action-bar">
+    <view class="action-row">
+      <button class="action-btn add-round-btn" bindtap="addRound">
+        <text class="btn-icon">➕</text>
+        <text>添加一局</text>
+      </button>
+      <button class="action-btn add-player-btn" bindtap="addPlayer" wx:if="{{isCreator}}">
+        <text class="btn-icon">👤</text>
+        <text>添加玩家</text>
+      </button>
+    </view>
+    <view class="action-row">
+      <button class="action-btn reset-btn" bindtap="resetAllScores" wx:if="{{isCreator}}">
+        <text class="btn-icon">🔄</text>
+        <text>重置分数</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 编辑弹窗 -->
+  <view class="modal-overlay" wx:if="{{showEditModal}}" bindtap="hideEditModal">
+    <view class="modal-content card" catchtap="true">
+      <view class="modal-header">
+        <text class="modal-title">
+          {{editType === 'playerName' ? '修改玩家名称' : '修改分数'}}
+        </text>
+        <button class="close-btn" bindtap="hideEditModal">✕</button>
+      </view>
+
+      <view class="modal-body">
+        <input 
+          class="edit-input" 
+          type="{{editType === 'score' ? 'number' : 'text'}}" 
+          placeholder="{{editType === 'playerName' ? '请输入玩家名称' : '请输入分数'}}"
+          value="{{editValue}}"
+          bindinput="onEditInput"
+          focus
+        />
+      </view>
+
+      <view class="modal-footer">
+        <button class="btn-secondary" bindtap="hideEditModal">取消</button>
+        <button class="btn-primary" bindtap="submitEdit">确认</button>
+      </view>
+    </view>
+  </view>
+</view>

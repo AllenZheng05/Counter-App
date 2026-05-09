@@ -1,0 +1,56 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <!-- Logo和标题区域 -->
+  <view class="header">
+    <view class="logo">🃏</view>
+    <view class="title">纸牌游戏计分器</view>
+    <view class="subtitle">斗地主 · 德州扑克 · 红五 · 掼蛋</view>
+  </view>
+
+  <!-- 用户信息区域 -->
+  <view class="user-section card" wx:if="{{!hasUserInfo}}">
+    <view class="user-prompt">
+      <text class="prompt-text">请先授权用户信息</text>
+      <button class="btn-primary mt-20" bindtap="getUserProfile">
+        授权登录
+      </button>
+    </view>
+  </view>
+
+  <view class="user-section card" wx:if="{{hasUserInfo}}">
+    <view class="user-info">
+      <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+      <view class="user-detail">
+        <text class="welcome">欢迎回来</text>
+        <text class="nickname">{{userInfo.nickName}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主要功能按钮 -->
+  <view class="action-section" wx:if="{{hasUserInfo}}">
+    <view class="action-card card" bindtap="goToCreate">
+      <view class="action-icon">➕</view>
+      <view class="action-text">
+        <text class="action-title">创建房间</text>
+        <text class="action-desc">创建新房间，邀请好友加入</text>
+      </view>
+      <view class="action-arrow">›</view>
+    </view>
+
+    <view class="action-card card" bindtap="goToJoin">
+      <view class="action-icon">🚪</view>
+      <view class="action-text">
+        <text class="action-title">加入房间</text>
+        <text class="action-desc">输入邀请码，加入好友的房间</text>
+      </view>
+      <view class="action-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 底部说明 -->
+  <view class="footer">
+    <text class="footer-text">适用于多种纸牌游戏的通用计分工具</text>
+    <text class="footer-text">支持实时同步，多人协作记分</text>
+  </view>
+</view>

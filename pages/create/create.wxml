@@ -1,0 +1,58 @@
+<!--pages/create/create.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="icon">🏠</view>
+    <view class="title">创建房间</view>
+    <view class="subtitle">创建一个房间，邀请好友一起游戏</view>
+  </view>
+
+  <view class="form-section">
+    <!-- 房间名称输入 -->
+    <view class="form-item card">
+      <view class="form-label">房间名称</view>
+      <input 
+        class="input-field" 
+        type="text" 
+        placeholder="请输入房间名称，如：今晚斗地主" 
+        maxlength="20"
+        value="{{roomName}}"
+        bindinput="onRoomNameInput"
+      />
+      <view class="char-count">{{roomName.length}}/20</view>
+    </view>
+
+    <!-- 最大玩家数选择 -->
+    <view class="form-item card">
+      <view class="form-label">最大玩家数</view>
+      <picker 
+        mode="selector" 
+        range="{{maxPlayersOptions}}" 
+        value="{{maxPlayers - 2}}"
+        bindchange="onMaxPlayersChange"
+      >
+        <view class="picker-display">
+          <text>{{maxPlayers}} 人</text>
+          <text class="picker-arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 创建按钮 -->
+    <view class="action-section">
+      <button 
+        class="btn-primary btn-create" 
+        bindtap="createRoom" 
+        loading="{{creating}}"
+        disabled="{{creating}}"
+      >
+        {{creating ? '创建中...' : '创建房间'}}
+      </button>
+    </view>
+
+    <!-- 提示文字 -->
+    <view class="tips">
+      <text class="tip-text">💡 创建后可在房间页面分享邀请码给好友</text>
+      <text class="tip-text">💡 邀请码为6位字母数字组合，如：A1B2C3</text>
+    </view>
+  </view>
+</view>

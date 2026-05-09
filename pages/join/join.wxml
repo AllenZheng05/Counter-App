@@ -1,0 +1,54 @@
+<!--pages/join/join.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="icon">🚪</view>
+    <view class="title">加入房间</view>
+    <view class="subtitle">输入好友分享的邀请码加入房间</view>
+  </view>
+
+  <view class="form-section">
+    <!-- 邀请码输入 -->
+    <view class="form-item card">
+      <view class="form-label">邀请码</view>
+      <view class="code-input-wrapper">
+        <input 
+          class="code-input" 
+          type="text" 
+          placeholder="请输入6位邀请码" 
+          maxlength="6"
+          value="{{inviteCode}}"
+          bindinput="onInviteCodeInput"
+          focus
+        />
+      </view>
+      <view class="code-display" wx:if="{{inviteCode}}">
+        <text class="code-text">{{inviteCode}}</text>
+      </view>
+    </view>
+
+    <!-- 加入按钮 -->
+    <view class="action-section">
+      <button 
+        class="btn-primary btn-join" 
+        bindtap="joinRoom" 
+        loading="{{joining}}"
+        disabled="{{joining}}"
+      >
+        {{joining ? '加入中...' : '加入房间'}}
+      </button>
+    </view>
+
+    <!-- 提示文字 -->
+    <view class="tips">
+      <text class="tip-text">💡 邀请码由房间创建者提供</text>
+      <text class="tip-text">💡 邀请码为6位字母数字组合，不区分大小写</text>
+      <text class="tip-text">💡 例如：A1B2C3</text>
+    </view>
+
+    <!-- 没有邀请码？ -->
+    <view class="no-code-section">
+      <text class="no-code-text">还没有邀请码？</text>
+      <text class="no-code-link" bindtap="goToCreate">创建新房间</text>
+    </view>
+  </view>
+</view>
