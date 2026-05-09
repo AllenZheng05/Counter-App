@@ -6,18 +6,22 @@ Page({
     roomId: '',
     inviteCode: '',
     room: null,
+    roomName: '加载中...',
     players: [],
     rounds: 0,
     scores: [],      // 二维数组 [roundIndex][playerIndex]
     totals: [],      // 每个玩家的总分
+    scoreValues: {},  // 分数显示值
+    scoreClassList: {}, // 分数样式
+    totalDisplayList: [], // 总分显示
+    totalClassList: [],   // 总分样式
     currentUserId: '',
     isCreator: false,
     showEditModal: false,
     editType: '',    // 'playerName' | 'score'
     editRoundIndex: -1,
     editPlayerIndex: -1,
-    editValue: '',
-    showAddRoundConfirm: false
+    editValue: ''
   },
 
   // 实时监听房间数据
@@ -76,12 +80,49 @@ Page({
           // 计算每个玩家的总分
           const totals = this.calculateTotals(scores, players.length)
           
+          // 计算显示值和样式
+          const scoreValues = {}
+          const scoreClassList = {}
+          scores.forEach((round, rIndex) => {
+            round.forEach((score, pIndex) => {
+              const key = rIndex + '-' + pIndex
+              scoreValues[key] = score || 0
+              if (score > 0) {
+                scoreClassList[key] = 'positive'
+              } else if (score < 0) {
+                scoreClassList[key] = 'negative'
+              } else {
+                scoreClassList[key] = ''
+              }
+            })
+          })
+          
+          const totalDisplayList = []
+          const totalClassList = []
+          totals.forEach(total => {
+            if (total > 0) {
+              totalDisplayList.push('+' + total)
+              totalClassList.push('positive')
+            } else if (total < 0) {
+              totalDisplayList.push('' + total)
+              totalClassList.push('negative')
+            } else {
+              totalDisplayList.push('0')
+              totalClassList.push('')
+            }
+          })
+          
           this.setData({
             room: room,
+            roomName: room.roomName || '游戏房间',
             players: players,
             rounds: rounds,
             scores: scores,
             totals: totals,
+            scoreValues: scoreValues,
+            scoreClassList: scoreClassList,
+            totalDisplayList: totalDisplayList,
+            totalClassList: totalClassList,
             isCreator: room.creatorId === this.data.currentUserId
           })
         } else {
@@ -412,7 +453,7 @@ Page({
   // 分享房间
   shareRoom() {
     const inviteCode = this.data.inviteCode
-    const roomName = this.data.room?.roomName || '游戏计分'
+    const roomName = this.data.roomName || '游戏计分'
 
     wx.showShareMenu({
       withShareTicket: true,
@@ -441,7 +482,7 @@ Page({
   },
 
   onShareAppMessage() {
-    const roomName = this.data.room?.roomName || '游戏计分'
+    const roomName = this.data.roomName || '游戏计分'
     const inviteCode = this.data.inviteCode
     
     return {
@@ -451,7 +492,7 @@ Page({
   },
 
   onShareTimeline() {
-    const roomName = this.data.room?.roomName || '游戏计分'
+    const roomName = this.data.roomName || '游戏计分'
     return {
       title: `${roomName} - 多人计分器`
     }
