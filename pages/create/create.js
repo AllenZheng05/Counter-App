@@ -102,10 +102,9 @@ Page({
 
   // 生成6位邀请码
   generateInviteCode() {
-    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     let code = ''
     for (let i = 0; i < 6; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length))
+      code += Math.floor(Math.random() * 10).toString()
     }
     return code
   },
