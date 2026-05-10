@@ -50,13 +50,6 @@
                 {{item.name}}
               </text>
             </view>
-            <button
-              class="delete-player-btn"
-              bindtap="deletePlayer"
-              data-index="{{pIndex}}"
-              data-id="{{item.id}}"
-              wx:if="{{isCreator && players.length > 1 && !item.isCreator}}"
-            >✕</button>
           </view>
           <view class="table-cell action-column-header">
             <text>操作</text>

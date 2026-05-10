@@ -212,7 +212,6 @@
   padding: 16rpx;
   background-color: #e3f2fd;
   border-right: 2rpx solid #f0f0f0;
-  position: relative;
 }
 
 .player-name-cell:last-child {
@@ -239,23 +238,6 @@
   opacity: 0.7;
 }
 
-.delete-player-btn {
-  position: absolute;
-  top: 6rpx;
-  right: 6rpx;
-  width: 28rpx;
-  height: 28rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(231, 76, 60, 0.12);
-  border: none;
-  color: #e74c3c;
-  font-size: 18rpx;
-  padding: 0;
-  line-height: 1;
-  border-radius: 50%;
-}
 
 /* 操作列 */
 .action-column-header {
