@@ -64,6 +64,10 @@ Page({
           app.globalData.userInfo = userInfo
         }
         this.setData({ currentUserId: openId })
+        // 异步获取到 openId 后，立即补算 isCreator（修复首次加载房主按钮不显示的问题）
+        if (this.data.room) {
+          this.setData({ isCreator: this.data.room.creatorId === openId })
+        }
       })
     }
     
@@ -720,7 +724,7 @@ Page({
             wx.navigateBack({
               delta: 2,
               fail: () => {
-                wx.switchTab({
+                wx.redirectTo({
                   url: '/pages/index/index'
                 })
               }
@@ -731,7 +735,7 @@ Page({
             wx.navigateBack({
               delta: 2,
               fail: () => {
-                wx.switchTab({
+                wx.redirectTo({
                   url: '/pages/index/index'
                 })
               }

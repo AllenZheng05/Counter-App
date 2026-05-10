@@ -85,7 +85,7 @@
 
   <!-- 编辑用户信息弹窗 -->
   <view class="modal-overlay" wx:if="{{showEditProfileModal}}" bindtap="hideEditProfile">
-    <view class="modal-content card" catchtap="true">
+    <view class="modal-content card" catchtap="stopPropagation">
       <view class="modal-header">
         <text class="modal-title">修改个人信息</text>
         <button class="close-btn" bindtap="hideEditProfile">✕</button>

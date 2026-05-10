@@ -142,7 +142,7 @@
   <!-- 操作按钮区域 -->
   <view class="action-bar">
     <view class="action-row">
-      <button class="action-btn add-round-btn" bindtap="addRound">
+      <button class="action-btn add-round-btn" bindtap="addRound" wx:if="{{isCreator}}">
         <text class="btn-icon">➕</text>
         <text>加局</text>
       </button>

@@ -262,6 +262,8 @@ Page({
     })
   },
 
+  stopPropagation() {},
+
   onShareAppMessage() {
     return {
       title: '开心记分器 - 快来一起记分吧！',

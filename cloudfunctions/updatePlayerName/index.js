@@ -9,12 +9,13 @@ const db = cloud.database()
 
 // 云函数入口函数
 exports.main = async (event, context) => {
+  const wxContext = cloud.getWXContext()
   const { roomId, playerIndex, newName } = event
 
   try {
     // 获取房间信息
     const roomResult = await db.collection('rooms').doc(roomId).get()
-    
+
     if (!roomResult.data) {
       return {
         success: false,
@@ -29,6 +30,16 @@ exports.main = async (event, context) => {
       return {
         success: false,
         error: '玩家不存在'
+      }
+    }
+
+    // 只有本人或房主可以改名
+    const callerIsOwner = room.creatorId === wxContext.OPENID
+    const callerIsPlayer = room.players[playerIndex].userId === wxContext.OPENID
+    if (!callerIsOwner && !callerIsPlayer) {
+      return {
+        success: false,
+        error: '无权修改该玩家名称'
       }
     }
 

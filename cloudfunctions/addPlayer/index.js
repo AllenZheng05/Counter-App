@@ -51,7 +51,7 @@ exports.main = async (event, context) => {
     }
 
     // 如果有现有的局数，需要为新玩家添加0分
-    const updatedScores = room.scores.map(round => [...round, 0])
+    const updatedScores = (room.scores || []).map(round => [...round, 0])
 
     await db.collection('rooms').doc(roomId).update({
       data: {
