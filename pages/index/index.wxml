@@ -4,7 +4,7 @@
   <view class="header">
     <view class="logo">🃏</view>
     <view class="title">纸牌游戏计分器</view>
-    <view class="subtitle">斗地主 · 德州扑克 · 红五 · 掼蛋</view>
+    <view class="subtitle">斗地主 · 红五 · 掼蛋</view>
   </view>
 
   <!-- 用户信息区域 -->
