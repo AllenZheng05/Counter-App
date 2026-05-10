@@ -41,8 +41,7 @@
     <!-- 提示文字 -->
     <view class="tips">
       <text class="tip-text">💡 邀请码由房间创建者提供</text>
-      <text class="tip-text">💡 邀请码为6位字母数字组合，不区分大小写</text>
-      <text class="tip-text">💡 例如：A1B2C3</text>
+      <text class="tip-text">💡 邀请码为6位纯数字，如：034892</text>
     </view>
 
     <!-- 没有邀请码？ -->

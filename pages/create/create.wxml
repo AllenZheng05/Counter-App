@@ -52,7 +52,7 @@
     <!-- 提示文字 -->
     <view class="tips">
       <text class="tip-text">💡 创建后可在房间页面分享邀请码给好友</text>
-      <text class="tip-text">💡 邀请码为6位字母数字组合，如：A1B2C3</text>
+      <text class="tip-text">💡 邀请码为6位纯数字，如：034892</text>
     </view>
   </view>
 </view>
