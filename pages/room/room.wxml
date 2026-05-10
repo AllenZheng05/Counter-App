@@ -36,8 +36,8 @@
         <view class="table-row header-row">
           <!-- 左上角格子 -->
           <view class="table-cell corner-cell">
-            <view class="corner-top"><text class="corner-label">名</text></view>
-            <view class="corner-bottom"><text class="corner-label">局</text></view>
+            <view class="corner-top"><text class="corner-label">玩家</text></view>
+            <view class="corner-bottom"><text class="corner-label">局数</text></view>
           </view>
           <view 
             class="table-cell player-name-cell" 

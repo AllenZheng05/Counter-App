@@ -149,6 +149,8 @@
   flex-shrink: 0;
   flex-grow: 0;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
   background-color: #f0f0f0;
   border-right: 2rpx solid #e0e0e0;
   overflow: hidden;
