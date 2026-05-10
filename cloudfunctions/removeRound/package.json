@@ -1,0 +1,9 @@
+{
+  "name": "removeRound",
+  "version": "1.0.0",
+  "description": "删除最后一局的分数记录",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

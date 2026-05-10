@@ -52,12 +52,14 @@ Page({
     // 获取当前用户ID
     const userInfo = app.globalData.userInfo
     if (userInfo) {
-      this.setData({
-        currentUserId: userInfo.openId || userInfo.nickName
+      // 使用 nickName 作为用户标识（如果没有 openId）
+      this.setData({ 
+        currentUserId: userInfo.openId || userInfo.nickName || 'user_' + Date.now()
       })
+    } else {
+      this.setData({ currentUserId: 'user_' + Date.now() })
     }
-
-    // 监听房间数据变化
+    
     this.watchRoom(roomId)
   },
 
@@ -69,6 +71,12 @@ Page({
 
   // 监听房间数据
   watchRoom(roomId) {
+    // 先关闭之前的监听器（如果存在）
+    if (this.roomWatcher) {
+      this.roomWatcher.close()
+      this.roomWatcher = null
+    }
+
     const db = wx.cloud.database()
     
     this.roomWatcher = db.collection('rooms').doc(roomId).watch({
@@ -332,6 +340,11 @@ Page({
     })
   },
 
+  // 阻止事件冒泡
+  stopPropagation() {
+    // 空函数，用于阻止事件冒泡
+  },
+
   // 切换分数正负号（弹窗内）
   toggleScoreSign(e) {
     const sign = e.currentTarget.dataset.sign
@@ -542,6 +555,110 @@ Page({
     wx.showShareMenu({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
+    })
+  },
+
+  // 清空某一局的分数
+  clearRound(e) {
+    if (!this.data.isCreator) {
+      wx.showToast({
+        title: '只有房主可以清空',
+        icon: 'none'
+      })
+      return
+    }
+
+    const roundIndex = e.currentTarget.dataset.roundindex
+
+    wx.showModal({
+      title: '确认清空',
+      content: `将清空第${roundIndex + 1}局所有玩家的分数`,
+      success: (res) => {
+        if (res.confirm) {
+          const playerCount = this.data.players.length
+          const promises = []
+          
+          // 将该局所有玩家的分数设置为0
+          for (let i = 0; i < playerCount; i++) {
+            promises.push(
+              wx.cloud.callFunction({
+                name: 'updateScore',
+                data: {
+                  roomId: this.data.roomId,
+                  roundIndex: roundIndex,
+                  playerIndex: i,
+                  score: 0
+                }
+              })
+            )
+          }
+
+          Promise.all(promises).then(() => {
+            wx.showToast({
+              title: '已清空',
+              icon: 'success'
+            })
+          }).catch(err => {
+            console.error('清空局数失败:', err)
+            wx.showToast({
+              title: '清空失败',
+              icon: 'none'
+            })
+          })
+        }
+      }
+    })
+  },
+
+  // 减少一局（删除最后一局）
+  removeRound() {
+    if (!this.data.isCreator) {
+      wx.showToast({
+        title: '只有房主可以减少局数',
+        icon: 'none'
+      })
+      return
+    }
+
+    if (this.data.scores.length === 0) {
+      wx.showToast({
+        title: '没有可以删除的局数',
+        icon: 'none'
+      })
+      return
+    }
+
+    wx.showModal({
+      title: '确认删除',
+      content: '将删除最后一局的分数记录',
+      success: (res) => {
+        if (res.confirm) {
+          wx.cloud.callFunction({
+            name: 'removeRound',
+            data: {
+              roomId: this.data.roomId
+            }
+          }).then(res => {
+            if (!res.result || !res.result.success) {
+              wx.showToast({
+                title: (res.result && res.result.error) || '删除失败',
+                icon: 'none'
+              })
+            } else {
+              wx.showToast({
+                title: '已删除',
+                icon: 'success'
+              })
+            }
+          }).catch(err => {
+            console.error('删除局数失败:', err)
+            wx.showToast({
+              title: '删除失败',
+              icon: 'none'
+            })
+          })
+        }
+      }
     })
   },
 

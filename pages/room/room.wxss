@@ -109,10 +109,65 @@
   border-right: 2rpx solid #f0f0f0;
 }
 
-.round-label {
-  background-color: #e8f4fd;
-  color: #1a73e8;
+/* 左上角三角形分割格子 */
+.corner-cell {
+  width: 140rpx;
+  min-width: 140rpx;
+  max-width: 140rpx;
+  height: 88rpx;
+  padding: 0;
+  position: relative;
+  background-color: #f0f0f0;
+  border-right: 2rpx solid #e0e0e0;
+  overflow: hidden;
+}
+
+.corner-triangle-top {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e3f2fd;
+  border-bottom: 1rpx solid #e0e0e0;
+}
+
+.corner-triangle-top text {
+  font-size: 22rpx;
   font-weight: 600;
+  color: #1a73e8;
+}
+
+.corner-triangle-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e8f4fd;
+}
+
+.corner-triangle-bottom text {
+  font-size: 22rpx;
+  font-weight: 600;
+  color: #1a73e8;
+}
+
+/* 局数标签格子 */
+.round-label-cell {
+  width: 140rpx;
+  min-width: 140rpx;
+  background-color: #e8f4fd;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1a73e8;
+  border-right: 2rpx solid #e0e0e0;
 }
 
 .total-label {
@@ -168,6 +223,56 @@
   padding: 0;
   line-height: 1;
   flex-shrink: 0;
+}
+
+/* 操作列 */
+.action-column-header {
+  width: 120rpx;
+  min-width: 120rpx;
+  max-width: 120rpx;
+  font-size: 24rpx;
+  color: #999999;
+  font-weight: 600;
+  background-color: #f0f0f0;
+  border-left: 2rpx solid #e0e0e0;
+}
+
+.action-cell {
+  width: 120rpx;
+  min-width: 120rpx;
+  max-width: 120rpx;
+  padding: 8rpx;
+  background-color: #fafafa;
+  border-left: 2rpx solid #e0e0e0;
+}
+
+.clear-round-btn {
+  width: 72rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  font-size: 36rpx;
+  padding: 0;
+  line-height: 1;
+  border-radius: 50%;
+  transition: all 0.15s;
+}
+
+.clear-round-btn:active {
+  background-color: rgba(231, 76, 60, 0.15);
+  transform: scale(0.92);
+}
+
+.total-action-cell {
+  background-color: #fff8e1;
+  border-left: 2rpx solid #e0e0e0;
+}
+
+.total-action-text {
+  font-size: 0;
 }
 
 /* 分数单元格 */
@@ -386,6 +491,15 @@
 
 .reset-btn:active {
   background-color: #c0392b;
+}
+
+.remove-round-btn {
+  background-color: #e67e22;
+  color: #ffffff;
+}
+
+.remove-round-btn:active {
+  background-color: #d35400;
 }
 
 .btn-icon {

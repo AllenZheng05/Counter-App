@@ -24,6 +24,9 @@
         <text class="welcome">欢迎回来</text>
         <text class="nickname">{{userInfo.nickName}}</text>
       </view>
+      <button class="edit-profile-btn" bindtap="showEditProfile">
+        ✏️
+      </button>
     </view>
   </view>
 
@@ -62,5 +65,46 @@
   <view class="footer">
     <text class="footer-text">适用于多种纸牌游戏的通用计分工具</text>
     <text class="footer-text">支持实时同步，多人协作记分</text>
+  </view>
+
+  <!-- 编辑用户信息弹窗 -->
+  <view class="modal-overlay" wx:if="{{showEditProfileModal}}" bindtap="hideEditProfile">
+    <view class="modal-content card" catchtap="true">
+      <view class="modal-header">
+        <text class="modal-title">修改个人信息</text>
+        <button class="close-btn" bindtap="hideEditProfile">✕</button>
+      </view>
+
+      <view class="modal-body">
+        <view class="edit-field">
+          <text class="edit-label">昵称</text>
+          <input 
+            class="edit-input" 
+            type="text"
+            placeholder="请输入昵称"
+            value="{{editNickName}}"
+            bindinput="onNickNameInput"
+            maxlength="20"
+          />
+        </view>
+        <view class="edit-field">
+          <text class="edit-label">头像</text>
+          <view class="avatar-edit-section">
+            <image 
+              class="avatar-preview" 
+              src="{{editAvatarUrl}}" 
+              mode="aspectFill"
+              bindtap="chooseAvatar"
+            ></image>
+            <text class="avatar-tip">点击更换头像</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="modal-footer">
+        <button class="btn-secondary" bindtap="hideEditProfile">取消</button>
+        <button class="btn-primary" bindtap="saveProfile">保存</button>
+      </view>
+    </view>
   </view>
 </view>

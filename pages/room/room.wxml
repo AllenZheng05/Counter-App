@@ -26,8 +26,14 @@
       <view class="score-table">
         <!-- 表头：玩家名称行 -->
         <view class="table-row header-row">
-          <view class="table-cell row-label">
-            <text>玩家</text>
+          <!-- 左上角三角形分割格子 -->
+          <view class="table-cell corner-cell">
+            <view class="corner-triangle-top">
+              <text>玩家</text>
+            </view>
+            <view class="corner-triangle-bottom">
+              <text>局数</text>
+            </view>
           </view>
           <view 
             class="table-cell player-name-cell" 
@@ -49,6 +55,9 @@
               </button>
             </view>
           </view>
+          <view class="table-cell action-column-header">
+            <text>操作</text>
+          </view>
         </view>
 
         <!-- 数据行：每一局的分数 -->
@@ -58,8 +67,8 @@
           wx:key="roundIndex"
           wx:for-index="roundIndex"
         >
-          <view class="table-cell row-label round-label">
-            <text>第{{roundIndex + 1}}局</text>
+          <view class="table-cell round-label-cell">
+            <text>{{roundIndex + 1}}</text>
           </view>
           <view 
             class="table-cell score-cell" 
@@ -77,6 +86,16 @@
               data-playerindex="{{pIndex}}"
             >±</view>
           </view>
+          <view class="table-cell action-cell">
+            <button 
+              class="clear-round-btn" 
+              bindtap="clearRound" 
+              data-roundindex="{{roundIndex}}"
+              wx:if="{{isCreator}}"
+            >
+              🗑️
+            </button>
+          </view>
         </view>
 
         <!-- 总分行 -->
@@ -91,6 +110,9 @@
             wx:for-index="pIndex"
           >
             <text class="total-value {{totalClassList[pIndex]}}">{{totalDisplayList[pIndex]}}</text>
+          </view>
+          <view class="table-cell action-cell total-action-cell">
+            <text class="total-action-text"></text>
           </view>
         </view>
       </view>
@@ -115,9 +137,9 @@
         <text class="btn-icon">➕</text>
         <text>添加一局</text>
       </button>
-      <button class="action-btn add-player-btn" bindtap="addPlayer" wx:if="{{isCreator}}">
-        <text class="btn-icon">👤</text>
-        <text>添加玩家</text>
+      <button class="action-btn remove-round-btn" bindtap="removeRound" wx:if="{{isCreator && scores.length > 0}}">
+        <text class="btn-icon">➖</text>
+        <text>减少一局</text>
       </button>
     </view>
     <view class="action-row">
@@ -130,7 +152,7 @@
 
   <!-- 编辑弹窗 -->
   <view class="modal-overlay" wx:if="{{showEditModal}}" bindtap="hideEditModal">
-    <view class="modal-content card" catchtap="true">
+    <view class="modal-content card" catchtap="stopPropagation">
       <view class="modal-header">
         <text class="modal-title" wx:if="{{editType === 'playerName'}}">修改玩家名称</text>
         <text class="modal-title" wx:else>修改分数</text>

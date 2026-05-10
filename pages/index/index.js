@@ -8,7 +8,11 @@ Page({
     canIUseGetUserProfile: wx.getUserProfile ? true : false,
     showReturnRoom: false,
     returnRoomInfo: null,
-    checkingRoom: false
+    checkingRoom: false,
+    // 编辑用户信息相关
+    showEditProfileModal: false,
+    editNickName: '',
+    editAvatarUrl: ''
   },
 
   onShow: function () {
@@ -23,6 +27,115 @@ Page({
         hasUserInfo: true
       })
     }
+  },
+
+  // 显示编辑用户信息弹窗
+  showEditProfile() {
+    this.setData({
+      showEditProfileModal: true,
+      editNickName: this.data.userInfo.nickName || '',
+      editAvatarUrl: this.data.userInfo.avatarUrl || ''
+    })
+  },
+
+  // 隐藏编辑用户信息弹窗
+  hideEditProfile() {
+    this.setData({
+      showEditProfileModal: false,
+      editNickName: '',
+      editAvatarUrl: ''
+    })
+  },
+
+  // 输入昵称
+  onNickNameInput(e) {
+    this.setData({
+      editNickName: e.detail.value
+    })
+  },
+
+  // 选择头像
+  chooseAvatar() {
+    wx.chooseMessageImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        if (res.tempFiles.length > 0) {
+          this.setData({
+            editAvatarUrl: res.tempFiles[0].tempFilePath
+          })
+        }
+      },
+      fail: (err) => {
+        console.error('选择头像失败:', err)
+        wx.showToast({
+          title: '选择头像失败',
+          icon: 'none'
+        })
+      }
+    })
+  },
+
+  // 保存用户信息
+  saveProfile() {
+    if (!this.data.editNickName || this.data.editNickName.trim() === '') {
+      wx.showToast({
+        title: '请输入昵称',
+        icon: 'none'
+      })
+      return
+    }
+
+    if (!this.data.editAvatarUrl) {
+      wx.showToast({
+        title: '请选择头像',
+        icon: 'none'
+      })
+      return
+    }
+
+    // 上传头像到云存储
+    wx.showLoading({
+      title: '保存中...'
+    })
+
+    const fileName = `avatar/${Date.now()}_${Math.random().toString(36).substr(2, 9)}.jpg`
+    
+    wx.cloud.uploadFile({
+      cloudPath: fileName,
+      filePath: this.data.editAvatarUrl,
+      success: (uploadRes) => {
+        const newUserInfo = {
+          nickName: this.data.editNickName.trim(),
+          avatarUrl: uploadRes.fileID,
+          // 保留原有的 openId
+          openId: this.data.userInfo.openId
+        }
+
+        this.setData({
+          userInfo: newUserInfo,
+          showEditProfileModal: false,
+          editNickName: '',
+          editAvatarUrl: ''
+        })
+        app.globalData.userInfo = newUserInfo
+
+        wx.hideLoading()
+        wx.showToast({
+          title: '保存成功',
+          icon: 'success'
+        })
+      },
+      fail: (err) => {
+        console.error('上传头像失败:', err)
+        wx.hideLoading()
+        wx.showToast({
+          title: '上传头像失败',
+          icon: 'none'
+        })
+      }
+    })
   },
 
   // 检查是否可以返回房间
