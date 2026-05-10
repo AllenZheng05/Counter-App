@@ -476,7 +476,7 @@ Page({
     } else if (this.data.editType === 'score') {
       // 修改分数
       const scoreValue = parseInt(value)
-      if (isNaN(scoreValue) || scoreValue === 0) {
+      if (isNaN(scoreValue)) {
         wx.showToast({
           title: '请输入有效数字',
           icon: 'none'
