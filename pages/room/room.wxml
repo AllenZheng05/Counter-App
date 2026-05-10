@@ -54,7 +54,7 @@
                 bindtap="deletePlayer"
                 data-index="{{pIndex}}"
                 data-id="{{item.id}}"
-                wx:if="{{isCreator && players.length > 1}}"
+                wx:if="{{isCreator && players.length > 1 && !item.isCreator}}"
               >
                 ✕
               </button>

@@ -97,7 +97,21 @@ Page({
           const players = room.players || []
           const scores = room.scores || []
           const rounds = scores.length
-          
+
+          // 检测当前用户是否还在房间中（被踢时自动跳走）
+          const currentUserId = this.data.currentUserId
+          if (currentUserId && !this.data.isLoading) {
+            const stillInRoom = players.some(p => p.userId === currentUserId)
+            if (!stillInRoom) {
+              app.globalData.currentRoom = null
+              wx.showToast({ title: '您已被移出房间', icon: 'none' })
+              setTimeout(() => {
+                wx.navigateBack({ delta: 2, fail: () => wx.navigateTo({ url: '/pages/index/index' }) })
+              }, 1500)
+              return
+            }
+          }
+
           // 计算每个玩家的总分
           const totals = this.calculateTotals(scores, players.length)
           

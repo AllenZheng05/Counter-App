@@ -238,15 +238,15 @@
 }
 
 .delete-player-btn {
-  width: 40rpx;
-  height: 40rpx;
+  width: 28rpx;
+  height: 28rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgba(231, 76, 60, 0.12);
   border: none;
   color: #e74c3c;
-  font-size: 22rpx;
+  font-size: 18rpx;
   padding: 0;
   line-height: 1;
   flex-shrink: 0;
