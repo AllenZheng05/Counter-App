@@ -3,7 +3,7 @@
   <view class="header">
     <view class="icon">🏠</view>
     <view class="title">创建房间</view>
-    <view class="subtitle">创建一个房间，邀请好友一起游戏</view>
+    <view class="subtitle">创建一个房间，邀请好友加入</view>
   </view>
 
   <view class="form-section">

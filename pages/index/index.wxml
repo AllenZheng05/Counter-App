@@ -3,14 +3,14 @@
   <!-- Logo和标题区域 -->
   <view class="header">
     <view class="logo">🃏</view>
-    <view class="title">纸牌游戏计分器</view>
+    <view class="title">开心记分器</view>
     <view class="subtitle">斗地主 · 红五 · 掼蛋</view>
   </view>
 
   <!-- 用户信息区域 -->
   <view class="user-section card" wx:if="{{!hasUserInfo}}">
     <view class="setup-profile">
-      <text class="setup-title">设置游戏昵称和头像</text>
+      <text class="setup-title">设置昵称和头像</text>
 
       <button class="avatar-picker-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
         <image wx:if="{{setupAvatarUrl}}" class="setup-avatar" src="{{setupAvatarUrl}}" mode="aspectFill"></image>
@@ -29,7 +29,7 @@
         maxlength="20"
       />
 
-      <button class="btn-primary setup-confirm-btn" bindtap="confirmSetup">进入游戏</button>
+      <button class="btn-primary setup-confirm-btn" bindtap="confirmSetup">开始记分</button>
     </view>
   </view>
 
@@ -79,7 +79,7 @@
 
   <!-- 底部说明 -->
   <view class="footer">
-    <text class="footer-text">适用于多种纸牌游戏的通用计分工具</text>
+    <text class="footer-text">适用于多种纸牌的通用计分工具</text>
     <text class="footer-text">支持实时同步，多人协作记分</text>
   </view>
 

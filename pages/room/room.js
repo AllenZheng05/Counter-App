@@ -144,7 +144,7 @@ Page({
 
           this.setData({
             room: room,
-            roomName: room.roomName || '游戏房间',
+            roomName: room.roomName || '记分房间',
             players: players,
             rounds: rounds,
             scores: scores,
@@ -576,7 +576,7 @@ Page({
   // 分享房间
   shareRoom() {
     const inviteCode = this.data.inviteCode
-    const roomName = this.data.roomName || '游戏计分'
+    const roomName = this.data.roomName || '开心记分'
 
     wx.showShareMenu({
       withShareTicket: true,
@@ -729,7 +729,7 @@ Page({
   },
 
   onShareAppMessage() {
-    const roomName = this.data.roomName || '游戏计分'
+    const roomName = this.data.roomName || '开心记分'
     const inviteCode = this.data.inviteCode
     
     return {
@@ -739,7 +739,7 @@ Page({
   },
 
   onShareTimeline() {
-    const roomName = this.data.roomName || '游戏计分'
+    const roomName = this.data.roomName || '开心记分'
     return {
       title: `${roomName} - 多人计分器`
     }

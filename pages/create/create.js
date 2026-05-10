@@ -75,7 +75,7 @@ Page({
 
         wx.showModal({
           title: '房间创建成功',
-          content: `房间号：${inviteCode}\n快分享给好友一起游戏吧！`,
+          content: `房间号：${inviteCode}\n快分享给好友一起玩吧！`,
           showCancel: false,
           confirmText: '进入房间',
           success: () => {
@@ -146,7 +146,7 @@ Page({
 
   onShareAppMessage() {
     return {
-      title: `${this.data.roomName || '纸牌游戏'} - 快来加入我的房间！`,
+      title: `${this.data.roomName || '开心记分'} - 快来加入我的房间！`,
       path: `/pages/join/join?inviteCode=${this.data.inviteCode}`
     }
   }

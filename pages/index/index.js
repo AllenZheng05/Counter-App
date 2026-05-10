@@ -264,7 +264,7 @@ Page({
 
   onShareAppMessage() {
     return {
-      title: '纸牌游戏计分器 - 快来一起记分吧！',
+      title: '开心记分器 - 快来一起记分吧！',
       path: '/pages/index/index'
     }
   }

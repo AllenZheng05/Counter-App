@@ -136,7 +136,7 @@ Page({
 
   onShareAppMessage() {
     return {
-      title: '纸牌游戏计分器 - 快来加入我的房间！',
+      title: '开心记分器 - 快来加入我的房间！',
       path: '/pages/index/index'
     }
   }
