@@ -1,0 +1,9 @@
+{
+  "triggers": [
+    {
+      "name": "cleanupTrigger",
+      "type": "timer",
+      "config": "0 0 * * * * *"
+    }
+  ]
+}

@@ -77,6 +77,13 @@ Page({
   onUnload: function () {
     if (this.roomWatcher) {
       this.roomWatcher.close()
+      this.roomWatcher = null
+    }
+    // 离开房间页面时自动退出（fire-and-forget，不等结果）
+    const roomId = this.data.roomId
+    if (roomId) {
+      wx.cloud.callFunction({ name: 'leaveRoom', data: { roomId } })
+      app.globalData.currentRoom = null
     }
   },
 
