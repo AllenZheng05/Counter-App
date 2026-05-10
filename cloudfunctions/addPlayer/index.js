@@ -9,12 +9,13 @@ const db = cloud.database()
 
 // 云函数入口函数
 exports.main = async (event, context) => {
+  const wxContext = cloud.getWXContext()
   const { roomId, playerName } = event
 
   try {
     // 获取房间信息
     const roomResult = await db.collection('rooms').doc(roomId).get()
-    
+
     if (!roomResult.data) {
       return {
         success: false,
@@ -23,6 +24,15 @@ exports.main = async (event, context) => {
     }
 
     const room = roomResult.data
+
+    // 验证调用者在该房间中
+    const isInRoom = room.players.some(p => p.userId === wxContext.OPENID)
+    if (!isInRoom) {
+      return {
+        success: false,
+        error: '无权操作该房间'
+      }
+    }
 
     // 检查玩家数量是否已满
     if (room.players.length >= room.maxPlayers) {
@@ -36,7 +46,7 @@ exports.main = async (event, context) => {
     const newPlayer = {
       id: generateUUID(),
       name: playerName || `玩家${room.players.length + 1}`,
-      userId: null,
+      userId: wxContext.OPENID,
       isCreator: false
     }
 

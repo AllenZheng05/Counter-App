@@ -45,10 +45,11 @@
               <text class="player-name" bindtap="showEditPlayerName" data-index="{{pIndex}}">
                 {{item.name}}
               </text>
-              <button 
-                class="delete-player-btn" 
-                bindtap="deletePlayer" 
+              <button
+                class="delete-player-btn"
+                bindtap="deletePlayer"
                 data-index="{{pIndex}}"
+                data-id="{{item.id}}"
                 wx:if="{{isCreator && players.length > 1}}"
               >
                 ✕

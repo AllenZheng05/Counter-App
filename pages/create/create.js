@@ -3,6 +3,7 @@ const app = getApp()
 Page({
   data: {
     roomName: '',
+    inviteCode: '',
     maxPlayers: 4,
     maxPlayersOptions: [2, 3, 4, 5, 6, 7, 8],
     maxPlayersIndex: 2,  // 默认选中4人（索引2）
@@ -46,10 +47,9 @@ Page({
 
     if (this.data.creating) return
 
-    this.setData({ creating: true })
-
-    // 生成6位邀请码
+    // 生成6位邀请码并存入 data，供 onShareAppMessage 使用
     const inviteCode = this.generateInviteCode()
+    this.setData({ creating: true, inviteCode })
 
     // 调用云函数创建房间
     wx.cloud.callFunction({
@@ -148,7 +148,7 @@ Page({
   onShareAppMessage() {
     return {
       title: `${this.data.roomName || '纸牌游戏'} - 快来加入我的房间！`,
-      path: `/pages/create/create?inviteCode=${this.data.roomName}`
+      path: `/pages/join/join?inviteCode=${this.data.inviteCode}`
     }
   }
 })

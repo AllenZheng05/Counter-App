@@ -49,15 +49,20 @@ Page({
       inviteCode
     })
 
-    // 获取当前用户ID
+    // 获取当前用户ID（必须与云函数存储的 wxContext.OPENID 一致）
     const userInfo = app.globalData.userInfo
-    if (userInfo) {
-      // 使用 nickName 作为用户标识（如果没有 openId）
-      this.setData({ 
-        currentUserId: userInfo.openId || userInfo.nickName || 'user_' + Date.now()
-      })
+    if (userInfo && userInfo.openId) {
+      this.setData({ currentUserId: userInfo.openId })
     } else {
-      this.setData({ currentUserId: 'user_' + Date.now() })
+      // openId 未获取到，重新从登录云函数取
+      wx.cloud.callFunction({ name: 'login' }).then(loginRes => {
+        const openId = loginRes.result.openid
+        if (userInfo) {
+          userInfo.openId = openId
+          app.globalData.userInfo = userInfo
+        }
+        this.setData({ currentUserId: openId })
+      })
     }
     
     this.watchRoom(roomId)
@@ -205,8 +210,9 @@ Page({
 
   // 删除玩家
   deletePlayer(e) {
+    const playerId = e.currentTarget.dataset.id
     const playerIndex = e.currentTarget.dataset.index
-    
+
     wx.showModal({
       title: '确认删除',
       content: '删除玩家将清空该玩家的所有分数记录',
@@ -216,6 +222,7 @@ Page({
             name: 'deletePlayer',
             data: {
               roomId: this.data.roomId,
+              playerId: playerId,
               playerIndex: playerIndex
             }
           }).then(res => {
@@ -384,7 +391,7 @@ Page({
     }).then(res => {
       if (!res.result || !res.result.success) {
         wx.showToast({
-          title: (!res.result || !res.result.success) || '更新失败',
+          title: (res.result && res.result.error) || '更新失败',
           icon: 'none'
         })
       }
@@ -404,7 +411,7 @@ Page({
     if (this.data.editType === 'score') {
       value = value.replace(/[^0-9]/g, '')
     } else {
-      value = value.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, '').substring(0, 10)
+      value = value.replace(/[^\u4e00-\u9fa5a-zA-Z0-9\s\-]/g, '').substring(0, 10)
     }
     this.setData({
       editValue: value
@@ -465,6 +472,13 @@ Page({
         })
         return
       }
+      if (scoreValue > 99999) {
+        wx.showToast({
+          title: '分数最大为99999',
+          icon: 'none'
+        })
+        return
+      }
 
       // 根据符号决定正负
       const finalScore = this.data.scoreSign === '-' ? -scoreValue : scoreValue
@@ -481,7 +495,7 @@ Page({
         this.hideEditModal()
         if (!res.result || !res.result.success) {
           wx.showToast({
-            title: (!res.result || !res.result.success) || '更新失败',
+            title: (res.result && res.result.error) || '更新失败',
             icon: 'none'
           })
         }
@@ -708,7 +722,7 @@ Page({
     
     return {
       title: `${roomName} - 快来加入我的房间！`,
-      path: `/pages/create/create?inviteCode=${inviteCode}`
+      path: `/pages/join/join?inviteCode=${inviteCode}`
     }
   },
 

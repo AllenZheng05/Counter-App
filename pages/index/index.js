@@ -157,8 +157,7 @@ Page({
     this.setData({ checkingRoom: true })
 
     const roomId = app.globalData.currentRoom._id
-    // 使用 openId 或 nickName 作为用户标识（getUserProfile 返回的信息中没有 openId）
-    const userId = app.globalData.userInfo.openId || app.globalData.userInfo.nickName
+    const userId = app.globalData.userInfo.openId
 
     // 查询房间，检查用户是否还在玩家列表中
     db.collection('rooms').doc(roomId).get().then(res => {
@@ -225,11 +224,19 @@ Page({
     wx.getUserProfile({
       desc: '用于记录您的游戏分数',
       success: (res) => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
+        // getUserProfile 不返回 openId，需单独调用登录云函数获取
+        wx.cloud.callFunction({ name: 'login' }).then(loginRes => {
+          const userInfo = {
+            ...res.userInfo,
+            openId: loginRes.result.openid
+          }
+          this.setData({ userInfo, hasUserInfo: true })
+          app.globalData.userInfo = userInfo
+        }).catch(() => {
+          // 登录云函数失败时仍保存用户信息，openId 留空
+          this.setData({ userInfo: res.userInfo, hasUserInfo: true })
+          app.globalData.userInfo = res.userInfo
         })
-        app.globalData.userInfo = res.userInfo
       },
       fail: (err) => {
         console.log('获取用户信息失败', err)
