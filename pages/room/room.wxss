@@ -212,6 +212,7 @@
   padding: 16rpx;
   background-color: #e3f2fd;
   border-right: 2rpx solid #f0f0f0;
+  position: relative;
 }
 
 .player-name-cell:last-child {
@@ -222,7 +223,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8rpx;
   width: 100%;
 }
 
@@ -240,6 +240,9 @@
 }
 
 .delete-player-btn {
+  position: absolute;
+  top: 6rpx;
+  right: 6rpx;
   width: 28rpx;
   height: 28rpx;
   display: flex;
@@ -251,7 +254,6 @@
   font-size: 18rpx;
   padding: 0;
   line-height: 1;
-  flex-shrink: 0;
   border-radius: 50%;
 }
 
