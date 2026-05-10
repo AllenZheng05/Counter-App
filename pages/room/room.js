@@ -742,5 +742,14 @@ Page({
     return {
       title: `${roomName} - 多人计分器`
     }
+  },
+
+  onAdLoad() {
+    // 广告加载成功，无需处理
+  },
+
+  onAdError(e) {
+    // 广告加载失败时静默处理，不影响正常功能
+    console.log('广告加载失败:', e.detail.errCode)
   }
 })
