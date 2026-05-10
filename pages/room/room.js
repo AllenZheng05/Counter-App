@@ -18,6 +18,7 @@ Page({
     rankList: [],         // 排名
     currentUserId: '',
     isCreator: false,
+    showCustomBanner: true,
     showEditModal: false,
     editType: '',    // 'playerName' | 'score'
     editRoundIndex: -1,
@@ -745,11 +746,10 @@ Page({
   },
 
   onAdLoad() {
-    // 广告加载成功，无需处理
+    this.setData({ showCustomBanner: false })
   },
 
-  onAdError(e) {
-    // 广告加载失败时静默处理，不影响正常功能
-    console.log('广告加载失败:', e.detail.errCode)
+  onAdError() {
+    this.setData({ showCustomBanner: true })
   }
 })

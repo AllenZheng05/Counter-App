@@ -1,8 +1,11 @@
 <!--pages/room/room.wxml-->
 <view class="container">
-  <!-- 广告位：替换 unit-id 为你在微信公众平台申请的广告单元ID -->
+  <!-- 广告位 -->
   <view class="ad-banner-wrapper">
-    <ad unit-id="your-ad-unit-id" ad-type="banner" bindload="onAdLoad" binderror="onAdError"></ad>
+    <view class="custom-banner" wx:if="{{showCustomBanner}}">
+      <text class="custom-banner-text">🃏 开心记分器</text>
+    </view>
+    <ad wx:else unit-id="your-ad-unit-id" ad-type="banner" bindload="onAdLoad" binderror="onAdError"></ad>
   </view>
 
   <!-- 顶部房间信息 -->
