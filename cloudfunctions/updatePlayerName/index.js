@@ -33,13 +33,11 @@ exports.main = async (event, context) => {
       }
     }
 
-    // 只有本人或房主可以改名
-    const callerIsOwner = room.creatorId === wxContext.OPENID
-    const callerIsPlayer = room.players[playerIndex].userId === wxContext.OPENID
-    if (!callerIsOwner && !callerIsPlayer) {
+    // 只有本人可以改名
+    if (room.players[playerIndex].userId !== wxContext.OPENID) {
       return {
         success: false,
-        error: '无权修改该玩家名称'
+        error: '只能修改自己的名称'
       }
     }
 

@@ -330,11 +330,15 @@ Page({
     })
   },
 
-  // 显示编辑弹窗 - 修改玩家名称
+  // 显示编辑弹窗 - 修改玩家名称（只能改自己）
   showEditPlayerName(e) {
     const playerIndex = e.currentTarget.dataset.index
     const player = this.data.players[playerIndex]
-    
+
+    if (player.userId !== this.data.currentUserId) {
+      return
+    }
+
     this.setData({
       showEditModal: true,
       editType: 'playerName',
