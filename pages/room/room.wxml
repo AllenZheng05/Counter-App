@@ -46,7 +46,7 @@
             wx:for-index="pIndex"
           >
             <view class="player-name-wrapper">
-              <text class="player-name" bindtap="showEditPlayerName" data-index="{{pIndex}}">
+              <text class="player-name" bindtap="showEditPlayerName" data-index="{{pIndex}}" data-own="{{item.userId === currentUserId && currentUserId}}">
                 {{item.name}}
               </text>
             </view>

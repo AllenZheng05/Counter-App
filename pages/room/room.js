@@ -332,12 +332,14 @@ Page({
 
   // 显示编辑弹窗 - 修改玩家名称（只能改自己）
   showEditPlayerName(e) {
+    // data-own 由 WXML 模板在渲染时已算好，双重保险
+    if (!e.currentTarget.dataset.own) return
+
     const playerIndex = e.currentTarget.dataset.index
     const player = this.data.players[playerIndex]
 
-    if (player.userId !== this.data.currentUserId) {
-      return
-    }
+    // 再次用 userId 校验，防止异常情况
+    if (!this.data.currentUserId || player.userId !== this.data.currentUserId) return
 
     this.setData({
       showEditModal: true,
