@@ -15,6 +15,7 @@ Page({
     scoreClassList: {}, // 分数样式
     totalDisplayList: [], // 总分显示
     totalClassList: [],   // 总分样式
+    rankList: [],         // 排名
     currentUserId: '',
     isCreator: false,
     showEditModal: false,
@@ -130,7 +131,16 @@ Page({
               totalClassList.push('')
             }
           })
-          
+
+          // 计算排名
+          const rankEmojis = ['🥇', '🥈', '🥉']
+          const indexed = totals.map((t, i) => ({ total: t, idx: i }))
+          indexed.sort((a, b) => b.total - a.total)
+          const rankList = new Array(totals.length).fill('')
+          indexed.forEach((item, rank) => {
+            rankList[item.idx] = rank < 3 ? rankEmojis[rank] : (rank + 1) + '位'
+          })
+
           this.setData({
             room: room,
             roomName: room.roomName || '游戏房间',
@@ -142,6 +152,7 @@ Page({
             scoreClassList: scoreClassList,
             totalDisplayList: totalDisplayList,
             totalClassList: totalClassList,
+            rankList: rankList,
             isCreator: room.creatorId === this.data.currentUserId
           })
         } else {

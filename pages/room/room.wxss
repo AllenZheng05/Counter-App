@@ -5,7 +5,7 @@
   flex-direction: column;
   min-height: 100vh;
   padding: 24rpx;
-  padding-bottom: 200rpx;
+  padding-bottom: 140rpx;
   background-color: #f5f5f5;
 }
 
@@ -71,7 +71,7 @@
 .table-wrapper {
   background-color: #ffffff;
   border-radius: 16rpx;
-  overflow: hidden;
+  overflow-x: auto;
   box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.06);
 }
 
@@ -180,6 +180,8 @@
 /* 玩家名称列 */
 .player-name-cell {
   flex: 1;
+  min-width: 140rpx;
+  flex-shrink: 0;
   padding: 16rpx;
   background-color: #e3f2fd;
   border-right: 2rpx solid #f0f0f0;
@@ -278,12 +280,14 @@
 /* 分数单元格 */
 .score-cell {
   flex: 1;
+  min-width: 140rpx;
+  flex-shrink: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border-right: 2rpx solid #f0f0f0;
   transition: background-color 0.2s;
-  position: relative;
 }
 
 .score-cell:last-child {
@@ -294,8 +298,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   cursor: pointer;
-  padding: 20rpx 24rpx;
+  padding: 16rpx 8rpx 8rpx;
   border-radius: 8rpx;
   transition: background-color 0.2s;
 }
@@ -320,27 +325,24 @@
 
 /* 正负号切换按钮 */
 .score-sign-toggle {
-  position: absolute;
-  right: 12rpx;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44rpx;
-  height: 44rpx;
+  width: 80%;
+  height: 36rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.06);
-  border-radius: 50%;
-  font-size: 24rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
   font-weight: bold;
   color: #999;
   cursor: pointer;
+  margin-bottom: 10rpx;
   transition: all 0.15s;
 }
 
 .score-sign-toggle:active {
-  background-color: rgba(0, 0, 0, 0.15);
-  transform: translateY(-50%) scale(0.92);
+  opacity: 0.7;
+  transform: scale(0.95);
 }
 
 .score-sign-toggle.positive {
@@ -360,6 +362,8 @@
 
 .total-cell {
   flex: 1;
+  min-width: 140rpx;
+  flex-shrink: 0;
   border-right: 2rpx solid #f0f0f0;
 }
 
@@ -367,8 +371,20 @@
   border-right: none;
 }
 
+.total-cell-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+}
+
+.rank-badge {
+  font-size: 28rpx;
+  line-height: 1;
+}
+
 .total-value {
-  font-size: 36rpx;
+  font-size: 32rpx;
   font-weight: bold;
   color: #1a1a2e;
 }
@@ -434,10 +450,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16rpx;
-  padding: 20rpx 24rpx;
+  padding: 16rpx 24rpx;
   background-color: #ffffff;
   box-shadow: 0 -4rpx 12rpx rgba(0, 0, 0, 0.06);
   z-index: 100;
@@ -445,7 +458,7 @@
 
 .action-row {
   display: flex;
-  gap: 16rpx;
+  gap: 12rpx;
 }
 
 .action-btn {

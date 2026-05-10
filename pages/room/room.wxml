@@ -71,22 +71,23 @@
           <view class="table-cell round-label-cell">
             <text>{{roundIndex + 1}}</text>
           </view>
-          <view 
-            class="table-cell score-cell" 
-            wx:for="{{players}}" 
+          <view
+            class="table-cell score-cell"
+            wx:for="{{players}}"
             wx:key="id"
             wx:for-index="pIndex"
           >
             <view class="score-cell-inner" bindtap="showEditScore" data-roundindex="{{roundIndex}}" data-playerindex="{{pIndex}}">
               <text class="score-value {{scoreClassList[roundIndex + '-' + pIndex]}}">{{scoreValues[roundIndex + '-' + pIndex]}}</text>
             </view>
-            <view 
+            <view
               class="score-sign-toggle {{scoreClassList[roundIndex + '-' + pIndex]}}"
               bindtap="toggleScoreSignOnCell"
               data-roundindex="{{roundIndex}}"
               data-playerindex="{{pIndex}}"
             >±</view>
           </view>
+
           <view class="table-cell action-cell">
             <button 
               class="clear-round-btn" 
@@ -104,13 +105,16 @@
           <view class="table-cell row-label total-label">
             <text>总分</text>
           </view>
-          <view 
-            class="table-cell total-cell" 
-            wx:for="{{players}}" 
+          <view
+            class="table-cell total-cell"
+            wx:for="{{players}}"
             wx:key="id"
             wx:for-index="pIndex"
           >
-            <text class="total-value {{totalClassList[pIndex]}}">{{totalDisplayList[pIndex]}}</text>
+            <view class="total-cell-content">
+              <text class="rank-badge">{{rankList[pIndex]}}</text>
+              <text class="total-value {{totalClassList[pIndex]}}">{{totalDisplayList[pIndex]}}</text>
+            </view>
           </view>
           <view class="table-cell action-cell total-action-cell">
             <text class="total-action-text"></text>
@@ -136,17 +140,15 @@
     <view class="action-row">
       <button class="action-btn add-round-btn" bindtap="addRound">
         <text class="btn-icon">➕</text>
-        <text>添加一局</text>
+        <text>加局</text>
       </button>
       <button class="action-btn remove-round-btn" bindtap="removeRound" wx:if="{{isCreator && scores.length > 0}}">
         <text class="btn-icon">➖</text>
-        <text>减少一局</text>
+        <text>减局</text>
       </button>
-    </view>
-    <view class="action-row">
       <button class="action-btn reset-btn" bindtap="resetAllScores" wx:if="{{isCreator}}">
         <text class="btn-icon">🔄</text>
-        <text>重置分数</text>
+        <text>重置</text>
       </button>
     </view>
   </view>
