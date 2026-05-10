@@ -5,10 +5,12 @@ Page({
   data: {
     userInfo: null,
     hasUserInfo: false,
-    canIUseGetUserProfile: wx.getUserProfile ? true : false,
     showReturnRoom: false,
     returnRoomInfo: null,
     checkingRoom: false,
+    // 初始设置
+    setupAvatarUrl: '',
+    setupNickName: '',
     // 编辑用户信息相关
     showEditProfileModal: false,
     editNickName: '',
@@ -54,86 +56,99 @@ Page({
     })
   },
 
-  // 选择头像
-  chooseAvatar() {
-    wx.chooseMessageImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: (res) => {
-        if (res.tempFiles.length > 0) {
-          this.setData({
-            editAvatarUrl: res.tempFiles[0].tempFilePath
-          })
-        }
-      },
-      fail: (err) => {
-        console.error('选择头像失败:', err)
-        wx.showToast({
-          title: '选择头像失败',
-          icon: 'none'
+  // 选择头像（初始设置）
+  onChooseAvatar(e) {
+    this.setData({ setupAvatarUrl: e.detail.avatarUrl })
+  },
+
+  // 输入昵称（初始设置）
+  onSetupNickNameInput(e) {
+    this.setData({ setupNickName: e.detail.value })
+  },
+
+  // 确认初始设置
+  confirmSetup() {
+    const nickName = this.data.setupNickName.trim()
+    if (!nickName) {
+      wx.showToast({ title: '请输入昵称', icon: 'none' })
+      return
+    }
+    if (!this.data.setupAvatarUrl) {
+      wx.showToast({ title: '请选择头像', icon: 'none' })
+      return
+    }
+
+    wx.showLoading({ title: '设置中...' })
+    const fileName = `avatar/${Date.now()}_${Math.random().toString(36).substr(2, 9)}.jpg`
+    wx.cloud.uploadFile({
+      cloudPath: fileName,
+      filePath: this.data.setupAvatarUrl,
+      success: (uploadRes) => {
+        wx.cloud.callFunction({ name: 'login' }).then(loginRes => {
+          const userInfo = {
+            nickName,
+            avatarUrl: uploadRes.fileID,
+            openId: loginRes.result.openid
+          }
+          this.setData({ userInfo, hasUserInfo: true, setupAvatarUrl: '', setupNickName: '' })
+          app.globalData.userInfo = userInfo
+          wx.hideLoading()
+        }).catch(() => {
+          const userInfo = { nickName, avatarUrl: uploadRes.fileID }
+          this.setData({ userInfo, hasUserInfo: true, setupAvatarUrl: '', setupNickName: '' })
+          app.globalData.userInfo = userInfo
+          wx.hideLoading()
         })
+      },
+      fail: () => {
+        wx.hideLoading()
+        wx.showToast({ title: '设置失败，请重试', icon: 'none' })
       }
     })
   },
 
-  // 保存用户信息
+  // 选择头像（编辑弹窗）
+  onEditChooseAvatar(e) {
+    this.setData({ editAvatarUrl: e.detail.avatarUrl })
+  },
+
+  // 保存用户信息（编辑弹窗）
   saveProfile() {
-    if (!this.data.editNickName || this.data.editNickName.trim() === '') {
-      wx.showToast({
-        title: '请输入昵称',
-        icon: 'none'
-      })
+    const nickName = this.data.editNickName.trim()
+    if (!nickName) {
+      wx.showToast({ title: '请输入昵称', icon: 'none' })
       return
     }
 
-    if (!this.data.editAvatarUrl) {
-      wx.showToast({
-        title: '请选择头像',
-        icon: 'none'
-      })
+    wx.showLoading({ title: '保存中...' })
+
+    const doSave = (avatarUrl) => {
+      const newUserInfo = {
+        nickName,
+        avatarUrl,
+        openId: this.data.userInfo.openId
+      }
+      this.setData({ userInfo: newUserInfo, showEditProfileModal: false, editNickName: '', editAvatarUrl: '' })
+      app.globalData.userInfo = newUserInfo
+      wx.hideLoading()
+      wx.showToast({ title: '保存成功', icon: 'success' })
+    }
+
+    // 头像未变化（仍是原来的云存储地址）则直接保存
+    if (this.data.editAvatarUrl === this.data.userInfo.avatarUrl) {
+      doSave(this.data.editAvatarUrl)
       return
     }
 
-    // 上传头像到云存储
-    wx.showLoading({
-      title: '保存中...'
-    })
-
+    // 头像已更换，上传新头像
     const fileName = `avatar/${Date.now()}_${Math.random().toString(36).substr(2, 9)}.jpg`
-    
     wx.cloud.uploadFile({
       cloudPath: fileName,
       filePath: this.data.editAvatarUrl,
-      success: (uploadRes) => {
-        const newUserInfo = {
-          nickName: this.data.editNickName.trim(),
-          avatarUrl: uploadRes.fileID,
-          // 保留原有的 openId
-          openId: this.data.userInfo.openId
-        }
-
-        this.setData({
-          userInfo: newUserInfo,
-          showEditProfileModal: false,
-          editNickName: '',
-          editAvatarUrl: ''
-        })
-        app.globalData.userInfo = newUserInfo
-
+      success: (uploadRes) => doSave(uploadRes.fileID),
+      fail: () => {
         wx.hideLoading()
-        wx.showToast({
-          title: '保存成功',
-          icon: 'success'
-        })
-      },
-      fail: (err) => {
-        console.error('上传头像失败:', err)
-        wx.hideLoading()
-        wx.showToast({
-          title: '上传头像失败',
-          icon: 'none'
-        })
+        wx.showToast({ title: '上传头像失败', icon: 'none' })
       }
     })
   },
@@ -216,35 +231,6 @@ Page({
     
     wx.redirectTo({
       url: `/pages/room/room?roomId=${roomInfo._id}&inviteCode=${roomInfo.inviteCode}`
-    })
-  },
-
-  // 获取用户信息
-  getUserProfile(e) {
-    wx.getUserProfile({
-      desc: '用于记录您的游戏分数',
-      success: (res) => {
-        // getUserProfile 不返回 openId，需单独调用登录云函数获取
-        wx.cloud.callFunction({ name: 'login' }).then(loginRes => {
-          const userInfo = {
-            ...res.userInfo,
-            openId: loginRes.result.openid
-          }
-          this.setData({ userInfo, hasUserInfo: true })
-          app.globalData.userInfo = userInfo
-        }).catch(() => {
-          // 登录云函数失败时仍保存用户信息，openId 留空
-          this.setData({ userInfo: res.userInfo, hasUserInfo: true })
-          app.globalData.userInfo = res.userInfo
-        })
-      },
-      fail: (err) => {
-        console.log('获取用户信息失败', err)
-        wx.showToast({
-          title: '请先授权用户信息',
-          icon: 'none'
-        })
-      }
     })
   },
 

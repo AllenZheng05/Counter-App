@@ -31,13 +31,14 @@
     },
     "enableEngineNative": false,
     "useIsolateContext": true,
-    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true,
     "showES6CompileOption": false,
     "minifyWXML": true,
-    "condition": false
+    "condition": false,
+    "enhance": true,
+    "es6": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.19.4",

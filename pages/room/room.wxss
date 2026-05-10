@@ -62,6 +62,7 @@
   align-items: center;
   font-size: 24rpx;
   color: #666666;
+  white-space: nowrap;
 }
 
 .copy-icon {
@@ -121,75 +122,72 @@
   justify-content: center;
   padding: 20rpx 16rpx;
   min-height: 88rpx;
+  box-sizing: border-box;
 }
 
 /* 行标签列 */
 .row-label {
-  width: 140rpx;
-  min-width: 140rpx;
+  width: 90rpx;
+  min-width: 90rpx;
+  max-width: 90rpx;
+  flex-shrink: 0;
+  flex-grow: 0;
   background-color: #f8f9fa;
-  font-size: 26rpx;
+  font-size: 24rpx;
   font-weight: 600;
   color: #666666;
   border-right: 2rpx solid #f0f0f0;
 }
 
-/* 左上角三角形分割格子 */
+/* 左上角格子 */
 .corner-cell {
-  width: 140rpx;
-  min-width: 140rpx;
-  max-width: 140rpx;
+  width: 90rpx;
+  min-width: 90rpx;
+  max-width: 90rpx;
   height: 88rpx;
   padding: 0;
-  position: relative;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-direction: column;
   background-color: #f0f0f0;
   border-right: 2rpx solid #e0e0e0;
   overflow: hidden;
 }
 
-.corner-triangle-top {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 50%;
+.corner-top {
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: #e3f2fd;
+  justify-content: flex-end;
+  padding-right: 10rpx;
   border-bottom: 1rpx solid #e0e0e0;
+  background-color: #e3f2fd;
 }
 
-.corner-triangle-top text {
-  font-size: 22rpx;
-  font-weight: 600;
-  color: #1a73e8;
-}
-
-.corner-triangle-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
+.corner-bottom {
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left: 10rpx;
   background-color: #e8f4fd;
 }
 
-.corner-triangle-bottom text {
-  font-size: 22rpx;
+.corner-label {
+  font-size: 20rpx;
   font-weight: 600;
   color: #1a73e8;
 }
 
 /* 局数标签格子 */
 .round-label-cell {
-  width: 140rpx;
-  min-width: 140rpx;
+  width: 90rpx;
+  min-width: 90rpx;
+  max-width: 90rpx;
+  flex-shrink: 0;
+  flex-grow: 0;
   background-color: #e8f4fd;
-  font-size: 28rpx;
+  font-size: 26rpx;
   font-weight: 600;
   color: #1a73e8;
   border-right: 2rpx solid #e0e0e0;
@@ -204,9 +202,11 @@
 
 /* 玩家名称列 */
 .player-name-cell {
-  flex: 1;
-  min-width: 140rpx;
+  width: 160rpx;
+  min-width: 160rpx;
+  max-width: 160rpx;
   flex-shrink: 0;
+  flex-grow: 0;
   padding: 16rpx;
   background-color: #e3f2fd;
   border-right: 2rpx solid #f0f0f0;
@@ -238,26 +238,28 @@
 }
 
 .delete-player-btn {
-  width: 36rpx;
-  height: 36rpx;
+  width: 40rpx;
+  height: 40rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: none;
+  background-color: rgba(231, 76, 60, 0.12);
   border: none;
-  color: #999999;
-  font-size: 28rpx;
+  color: #e74c3c;
+  font-size: 22rpx;
   padding: 0;
   line-height: 1;
   flex-shrink: 0;
+  border-radius: 50%;
 }
 
 /* 操作列 */
 .action-column-header {
-  width: 120rpx;
-  min-width: 120rpx;
-  max-width: 120rpx;
-  font-size: 24rpx;
+  width: 90rpx;
+  min-width: 90rpx;
+  max-width: 90rpx;
+  flex-shrink: 0;
+  font-size: 22rpx;
   color: #999999;
   font-weight: 600;
   background-color: #f0f0f0;
@@ -265,9 +267,10 @@
 }
 
 .action-cell {
-  width: 120rpx;
-  min-width: 120rpx;
-  max-width: 120rpx;
+  width: 90rpx;
+  min-width: 90rpx;
+  max-width: 90rpx;
+  flex-shrink: 0;
   padding: 8rpx;
   background-color: #fafafa;
   border-left: 2rpx solid #e0e0e0;
@@ -304,9 +307,11 @@
 
 /* 分数单元格 */
 .score-cell {
-  flex: 1;
-  min-width: 140rpx;
+  width: 160rpx;
+  min-width: 160rpx;
+  max-width: 160rpx;
   flex-shrink: 0;
+  flex-grow: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -386,9 +391,11 @@
 }
 
 .total-cell {
-  flex: 1;
-  min-width: 140rpx;
+  width: 160rpx;
+  min-width: 160rpx;
+  max-width: 160rpx;
   flex-shrink: 0;
+  flex-grow: 0;
   border-right: 2rpx solid #f0f0f0;
 }
 

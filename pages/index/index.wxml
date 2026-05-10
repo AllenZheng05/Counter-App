@@ -9,11 +9,27 @@
 
   <!-- 用户信息区域 -->
   <view class="user-section card" wx:if="{{!hasUserInfo}}">
-    <view class="user-prompt">
-      <text class="prompt-text">请先授权用户信息</text>
-      <button class="btn-primary mt-20" bindtap="getUserProfile">
-        授权登录
+    <view class="setup-profile">
+      <text class="setup-title">设置游戏昵称和头像</text>
+
+      <button class="avatar-picker-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+        <image wx:if="{{setupAvatarUrl}}" class="setup-avatar" src="{{setupAvatarUrl}}" mode="aspectFill"></image>
+        <view wx:else class="avatar-placeholder">
+          <text class="avatar-placeholder-icon">👤</text>
+          <text class="avatar-placeholder-text">点击选择头像</text>
+        </view>
       </button>
+
+      <input
+        class="setup-nickname-input"
+        type="nickname"
+        placeholder="点击填入微信昵称"
+        value="{{setupNickName}}"
+        bindinput="onSetupNickNameInput"
+        maxlength="20"
+      />
+
+      <button class="btn-primary setup-confirm-btn" bindtap="confirmSetup">进入游戏</button>
     </view>
   </view>
 
@@ -90,12 +106,9 @@
         <view class="edit-field">
           <text class="edit-label">头像</text>
           <view class="avatar-edit-section">
-            <image 
-              class="avatar-preview" 
-              src="{{editAvatarUrl}}" 
-              mode="aspectFill"
-              bindtap="chooseAvatar"
-            ></image>
+            <button class="avatar-edit-btn" open-type="chooseAvatar" bindchooseavatar="onEditChooseAvatar">
+              <image class="avatar-preview" src="{{editAvatarUrl}}" mode="aspectFill"></image>
+            </button>
             <text class="avatar-tip">点击更换头像</text>
           </view>
         </view>

@@ -53,7 +53,7 @@ exports.main = async (event, context) => {
     // 添加玩家到房间
     const newPlayer = {
       id: generateUUID(),
-      name: user?.nickName || `玩家${room.players.length + 1}`,
+      name: (user && user.nickName) || `玩家${room.players.length + 1}`,
       userId: wxContext.OPENID,
       isCreator: false
     }

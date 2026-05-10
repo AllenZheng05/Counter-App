@@ -34,14 +34,10 @@
       <view class="score-table">
         <!-- 表头：玩家名称行 -->
         <view class="table-row header-row">
-          <!-- 左上角三角形分割格子 -->
+          <!-- 左上角格子 -->
           <view class="table-cell corner-cell">
-            <view class="corner-triangle-top">
-              <text>玩家</text>
-            </view>
-            <view class="corner-triangle-bottom">
-              <text>局数</text>
-            </view>
+            <view class="corner-top"><text class="corner-label">名</text></view>
+            <view class="corner-bottom"><text class="corner-label">局</text></view>
           </view>
           <view 
             class="table-cell player-name-cell" 
