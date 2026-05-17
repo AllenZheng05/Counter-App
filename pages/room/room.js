@@ -79,12 +79,7 @@ Page({
       this.roomWatcher.close()
       this.roomWatcher = null
     }
-    // 离开房间页面时自动退出（fire-and-forget，不等结果）
-    const roomId = this.data.roomId
-    if (roomId) {
-      wx.cloud.callFunction({ name: 'leaveRoom', data: { roomId } })
-      app.globalData.currentRoom = null
-    }
+    // 不自动退出房间，玩家可通过"返回房间"重新进入
   },
 
   // 监听房间数据
