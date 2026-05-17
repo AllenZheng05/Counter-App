@@ -240,60 +240,6 @@ Page({
     })
   },
 
-  // 删除玩家
-  deletePlayer(e) {
-    const playerId = e.currentTarget.dataset.id
-    const playerIndex = e.currentTarget.dataset.index
-
-    wx.showModal({
-      title: '确认删除',
-      content: '删除玩家将清空该玩家的所有分数记录',
-      success: (res) => {
-        if (res.confirm) {
-          wx.cloud.callFunction({
-            name: 'deletePlayer',
-            data: {
-              roomId: this.data.roomId,
-              playerId: playerId,
-              playerIndex: playerIndex
-            }
-          }).then(res => {
-            if (!res.result || !res.result.success) {
-              wx.showToast({
-                title: (res.result && res.result.error) || '删除失败',
-                icon: 'none'
-              })
-            } else {
-              // 如果房间被自动解散（没有玩家了），则返回上一页
-              if (res.result.roomDeleted) {
-                wx.showToast({
-                  title: '房间已自动解散',
-                  icon: 'success'
-                })
-                setTimeout(() => {
-                  wx.navigateBack({
-                    delta: 1,
-                    fail: () => {
-                      wx.switchTab({
-                        url: '/pages/index/index'
-                      })
-                    }
-                  })
-                }, 1500)
-              }
-            }
-          }).catch(err => {
-            console.error('删除玩家失败:', err)
-            wx.showToast({
-              title: '删除失败',
-              icon: 'none'
-            })
-          })
-        }
-      }
-    })
-  },
-
   // 添加新局
   addRound() {
     if (!this.data.room) return
@@ -624,32 +570,27 @@ Page({
 
     wx.showModal({
       title: '确认清空',
-      content: `将清空第${roundIndex + 1}局所有玩家的分数`,
+      content: `将清空第${Number(roundIndex) + 1}局所有玩家的分数`,
       success: (res) => {
         if (res.confirm) {
-          const playerCount = this.data.players.length
-          const promises = []
-          
-          // 将该局所有玩家的分数设置为0
-          for (let i = 0; i < playerCount; i++) {
-            promises.push(
-              wx.cloud.callFunction({
-                name: 'updateScore',
-                data: {
-                  roomId: this.data.roomId,
-                  roundIndex: roundIndex,
-                  playerIndex: i,
-                  score: 0
-                }
+          wx.cloud.callFunction({
+            name: 'clearRound',
+            data: {
+              roomId: this.data.roomId,
+              roundIndex: roundIndex
+            }
+          }).then(res => {
+            if (!res.result || !res.result.success) {
+              wx.showToast({
+                title: (res.result && res.result.error) || '清空失败',
+                icon: 'none'
               })
-            )
-          }
-
-          Promise.all(promises).then(() => {
-            wx.showToast({
-              title: '已清空',
-              icon: 'success'
-            })
+            } else {
+              wx.showToast({
+                title: '已清空',
+                icon: 'success'
+              })
+            }
           }).catch(err => {
             console.error('清空局数失败:', err)
             wx.showToast({

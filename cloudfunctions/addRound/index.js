@@ -25,7 +25,7 @@ exports.main = async (event, context) => {
     const room = roomResult.data
 
     // 添加新的一局
-    const updatedScores = [...room.scores, roundScores]
+    const updatedScores = [...(room.scores || []), roundScores]
 
     await db.collection('rooms').doc(roomId).update({
       data: {

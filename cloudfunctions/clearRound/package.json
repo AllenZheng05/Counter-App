@@ -1,0 +1,9 @@
+{
+  "name": "clearRound",
+  "version": "1.0.0",
+  "description": "清空某一局所有玩家的分数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
