@@ -112,19 +112,21 @@ Page({
   },
 
   // 粘贴邀请码
-  async pasteInviteCode() {
-    try {
-      const { tempFilePath } = await wx.getClipboardFile({
-        sourceType: ['album']
-      })
-      // 这里可以添加OCR识别功能，暂时只提示手动输入
-      wx.showToast({
-        title: '请手动输入邀请码',
-        icon: 'none'
-      })
-    } catch (err) {
-      console.error(err)
-    }
+  pasteInviteCode() {
+    wx.getClipboardData({
+      success: (res) => {
+        const text = (res.data || '').toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0, 6)
+        if (text) {
+          this.setData({ inviteCode: text })
+          wx.showToast({ title: '已粘贴', icon: 'success' })
+        } else {
+          wx.showToast({ title: '剪贴板中没有有效内容', icon: 'none' })
+        }
+      },
+      fail: () => {
+        wx.showToast({ title: '无法读取剪贴板', icon: 'none' })
+      }
+    })
   },
 
   // 跳转到创建房间页面
