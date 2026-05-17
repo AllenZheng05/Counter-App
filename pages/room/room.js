@@ -30,6 +30,7 @@ Page({
 
   // 实时监听房间数据
   roomWatcher: null,
+  isLeaving: false,
 
   onLoad: function (options) {
     const roomId = options.roomId
@@ -104,9 +105,9 @@ Page({
           const scores = room.scores || []
           const rounds = scores.length
 
-          // 检测当前用户是否还在房间中（被踢时自动跳走）
+          // 检测当前用户是否还在房间中（被踢时自动跳走，主动离开时跳过）
           const currentUserId = this.data.currentUserId
-          if (currentUserId && !this.data.isLoading) {
+          if (currentUserId && !this.data.isLoading && !this.isLeaving) {
             const stillInRoom = players.some(p => p.userId === currentUserId)
             if (!stillInRoom) {
               app.globalData.currentRoom = null
@@ -662,6 +663,7 @@ Page({
       content: '离开房间后将从玩家列表中移除，房间将返回主页',
       success: (res) => {
         if (res.confirm) {
+          this.isLeaving = true
           // 调用云函数从房间移除当前用户
           wx.cloud.callFunction({
             name: 'leaveRoom',
