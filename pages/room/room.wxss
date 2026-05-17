@@ -48,6 +48,8 @@
 
 .room-info {
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .room-name {
@@ -60,9 +62,9 @@
 .room-code {
   display: flex;
   align-items: center;
-  font-size: 24rpx;
+  font-size: 32rpx;
   color: #666666;
-  white-space: nowrap;
+  overflow: hidden;
 }
 
 .copy-icon {
@@ -73,6 +75,8 @@
 .room-actions {
   display: flex;
   gap: 16rpx;
+  flex-shrink: 0;
+  margin-left: 16rpx;
 }
 
 .icon-btn {
@@ -81,11 +85,14 @@
   justify-content: center;
   width: 64rpx;
   height: 64rpx;
+  min-width: 64rpx;
   background: none;
   border: none;
   font-size: 40rpx;
   padding: 0;
+  margin: 0;
   line-height: 1;
+  box-sizing: border-box;
 }
 
 /* 计分表格区域 */
