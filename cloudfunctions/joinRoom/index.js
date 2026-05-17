@@ -58,9 +58,12 @@ exports.main = async (event, context) => {
       isCreator: false
     }
 
+    const updatedScores = (room.scores || []).map(round => [...round, 0])
+
     await db.collection('rooms').doc(room._id).update({
       data: {
         players: db.command.push(newPlayer),
+        scores: updatedScores,
         updateTime: new Date()
       }
     })

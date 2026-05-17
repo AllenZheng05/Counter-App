@@ -57,11 +57,18 @@ exports.main = async (event, context) => {
       }
     }
 
-    // 否则更新玩家列表和分数
+    // 如果房主离开，把 creatorId 转让给剩余第一个玩家
+    let newCreatorId = room.creatorId
+    if (room.creatorId === wxContext.OPENID) {
+      newCreatorId = updatedPlayers[0].userId
+      updatedPlayers[0] = { ...updatedPlayers[0], isCreator: true }
+    }
+
     await db.collection('rooms').doc(roomId).update({
       data: {
         players: updatedPlayers,
         scores: updatedScores,
+        creatorId: newCreatorId,
         updateTime: new Date()
       }
     })
