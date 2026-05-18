@@ -39,15 +39,10 @@ exports.main = async (event, context) => {
       }
     }
 
-    // 更新分数
-    const updatedScores = [...room.scores]
-    const updatedRound = [...updatedScores[roundIndex]]
-    updatedRound[playerIndex] = score
-    updatedScores[roundIndex] = updatedRound
-
+    // 点路径直接写单格，避免并发覆盖
     await db.collection('rooms').doc(roomId).update({
       data: {
-        scores: updatedScores,
+        [`scores.${Number(roundIndex)}.${Number(playerIndex)}`]: score,
         updateTime: new Date()
       }
     })
