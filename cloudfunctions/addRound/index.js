@@ -14,7 +14,8 @@ exports.main = async (event, context) => {
       return { success: false, error: '房间不存在' }
     }
 
-    const updatedScores = [...(roomResult.data.scores || []), roundScores]
+    const existingScores = (roomResult.data.scores || []).filter(r => Array.isArray(r))
+    const updatedScores = [...existingScores, roundScores]
 
     await db.collection('rooms').doc(roomId).update({
       data: {

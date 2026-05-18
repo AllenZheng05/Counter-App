@@ -123,6 +123,7 @@ Page({
           const scoreValues = {}
           const scoreClassList = {}
           scores.forEach((round, rIndex) => {
+            if (!Array.isArray(round)) return
             round.forEach((score, pIndex) => {
               const key = rIndex + '-' + pIndex
               scoreValues[key] = score || 0
