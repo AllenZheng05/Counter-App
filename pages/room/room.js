@@ -204,6 +204,43 @@ Page({
     return totals
   },
 
+  // 添加玩家
+  addPlayer() {
+    if (!this.data.room) return
+
+    const playerCount = this.data.players.length
+    if (playerCount >= (this.data.room.maxPlayers || 8)) {
+      wx.showToast({
+        title: '玩家已满',
+        icon: 'none'
+      })
+      return
+    }
+
+    const newPlayerName = `玩家${playerCount + 1}`
+    
+    wx.cloud.callFunction({
+      name: 'addPlayer',
+      data: {
+        roomId: this.data.roomId,
+        playerName: newPlayerName
+      }
+    }).then(res => {
+      if (!res.result || !res.result.success) {
+        wx.showToast({
+          title: (res.result && res.result.error) || '添加失败',
+          icon: 'none'
+        })
+      }
+    }).catch(err => {
+      console.error('添加玩家失败:', err)
+      wx.showToast({
+        title: '添加失败',
+        icon: 'none'
+      })
+    })
+  },
+
   // 添加新局
   addRound() {
     if (!this.data.room) return
@@ -462,6 +499,17 @@ Page({
           icon: 'success'
         })
       }
+    })
+  },
+
+  // 分享房间
+  shareRoom() {
+    const inviteCode = this.data.inviteCode
+    const roomName = this.data.roomName || '开心记分'
+
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
     })
   },
 
