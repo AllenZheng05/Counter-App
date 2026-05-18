@@ -8,9 +8,17 @@ exports.main = async (event, context) => {
   const { roomId, roundScores } = event
 
   try {
+    const roomResult = await db.collection('rooms').doc(roomId).get()
+
+    if (!roomResult.data) {
+      return { success: false, error: '房间不存在' }
+    }
+
+    const updatedScores = [...(roomResult.data.scores || []), roundScores]
+
     await db.collection('rooms').doc(roomId).update({
       data: {
-        scores: db.command.push(roundScores),
+        scores: updatedScores,
         updateTime: new Date()
       }
     })
