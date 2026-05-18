@@ -192,6 +192,7 @@ Page({
   calculateTotals(scores, playerCount) {
     const totals = new Array(playerCount).fill(0)
     scores.forEach(round => {
+      if (!Array.isArray(round)) return
       round.forEach((score, playerIndex) => {
         totals[playerIndex] += score || 0
       })
