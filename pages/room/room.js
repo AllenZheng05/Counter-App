@@ -8,7 +8,7 @@ Page({
     room: null,
     roomName: '加载中...',
     players: [],
-    rounds: 0,
+
     scores: [],      // 二维数组 [roundIndex][playerIndex]
     totals: [],      // 每个玩家的总分
     scoreValues: {},  // 分数显示值
@@ -91,8 +91,6 @@ Page({
       this.roomWatcher = null
     }
 
-    const db = wx.cloud.database()
-    
     this.roomWatcher = db.collection('rooms').doc(roomId).watch({
       onChange: (snapshot) => {
         // 首次加载完成后，关闭加载状态
@@ -103,7 +101,6 @@ Page({
           const room = snapshot.docs[0]
           const players = room.players || []
           const scores = room.scores || []
-          const rounds = scores.length
 
           // 检测当前用户是否还在房间中（被踢时自动跳走，主动离开时跳过）
           const currentUserId = this.data.currentUserId
@@ -167,9 +164,7 @@ Page({
             room: room,
             roomName: room.roomName || '记分房间',
             players: players,
-            rounds: rounds,
             scores: scores,
-            totals: totals,
             scoreValues: scoreValues,
             scoreClassList: scoreClassList,
             totalDisplayList: totalDisplayList,
