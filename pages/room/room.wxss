@@ -143,9 +143,9 @@
 
 /* 行标签列 */
 .row-label {
-  width: 90rpx;
-  min-width: 90rpx;
-  max-width: 90rpx;
+  width: 75rpx;
+  min-width: 75rpx;
+  max-width: 75rpx;
   flex-shrink: 0;
   flex-grow: 0;
   background-color: #273444;
@@ -155,53 +155,54 @@
   border-right: 1rpx solid #334155;
 }
 
-/* 左上角格子 */
+/* 左上角格子：左上玩家 + 右下角局数 */
 .corner-cell {
-  width: 90rpx;
-  min-width: 90rpx;
-  max-width: 90rpx;
+  width: 75rpx;
+  min-width: 75rpx;
+  max-width: 75rpx;
   height: 80rpx;
   padding: 0;
   flex-shrink: 0;
   flex-grow: 0;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  background-color: #273444;
-  border-right: 1rpx solid #334155;
   overflow: hidden;
+  /* 斜线：左上浅 右下深 */
+  background: linear-gradient(-135deg, #2D3B4F 50%, #273444 50%);
+  border-right: 1rpx solid #334155;
 }
 
+/* 左上角放 玩家 */
 .corner-top {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 10rpx;
-  border-bottom: 1rpx solid #334155;
-  background-color: #2D3B4F;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 6rpx 0 0 6rpx;
+  background: transparent;
+  border: none;
 }
 
+/* 右下角放 局数 */
 .corner-bottom {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding-left: 10rpx;
-  background-color: #2D3B4F;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 0 6rpx 6rpx 0;
+  background: transparent;
 }
 
 .corner-label {
-  font-size: 20rpx;
+  font-size: 17rpx;
   font-weight: 600;
   color: #E2E8F0;
 }
 
-/* 局数标签格子 */
+/* 局数序号列同步改窄 */
 .round-label-cell {
-  width: 90rpx;
-  min-width: 90rpx;
-  max-width: 90rpx;
+  width: 75rpx;
+  min-width: 75rpx;
+  max-width: 75rpx;
   flex-shrink: 0;
   flex-grow: 0;
   background-color: #2D3B4F;
@@ -220,11 +221,7 @@
 
 /* 玩家名称列 */
 .player-name-cell {
-  width: 160rpx;
-  min-width: 160rpx;
-  max-width: 160rpx;
-  flex-shrink: 0;
-  flex-grow: 0;
+  flex: 1;
   padding: 16rpx;
   background-color: #2D3B4F;
   border-right: 1rpx solid #334155;
@@ -310,11 +307,7 @@
 
 /* 分数单元格 */
 .score-cell {
-  width: 160rpx;
-  min-width: 160rpx;
-  max-width: 160rpx;
-  flex-shrink: 0;
-  flex-grow: 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -344,7 +337,7 @@
 }
 
 .score-value {
-  font-size: 32rpx;
+  font-size: 30rpx;
   font-weight: 600;
   color: #F1F5F9;
 }
@@ -395,11 +388,7 @@
 }
 
 .total-cell {
-  width: 160rpx;
-  min-width: 160rpx;
-  max-width: 160rpx;
-  flex-shrink: 0;
-  flex-grow: 0;
+  flex: 1;
   border-right: 1rpx solid #334155;
 }
 
