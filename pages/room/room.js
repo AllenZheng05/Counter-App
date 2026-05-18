@@ -10,7 +10,7 @@ Page({
     players: [],
 
     scores: [],      // 二维数组 [roundIndex][playerIndex]
-
+    totals: [],      // 每个玩家的总分
     scoreValues: {},  // 分数显示值
     scoreClassList: {}, // 分数样式
     totalDisplayList: [], // 总分显示
