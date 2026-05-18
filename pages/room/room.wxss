@@ -350,37 +350,6 @@
   color: #EF4444;
 }
 
-/* 正负号切换按钮 */
-.score-sign-toggle {
-  width: 80%;
-  height: 36rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #273444;
-  border-radius: 8rpx;
-  font-size: 22rpx;
-  font-weight: bold;
-  color: #94A3B8;
-  cursor: pointer;
-  margin-bottom: 8rpx;
-  transition: all 0.15s;
-}
-
-.score-sign-toggle:active {
-  opacity: 0.7;
-  transform: scale(0.95);
-}
-
-.score-sign-toggle.positive {
-  color: #10B981;
-  background-color: rgba(16, 185, 129, 0.12);
-}
-
-.score-sign-toggle.negative {
-  color: #EF4444;
-  background-color: rgba(239, 68, 68, 0.12);
-}
 
 /* 总分行 */
 .total-row {
