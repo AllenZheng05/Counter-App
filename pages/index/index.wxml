@@ -2,7 +2,7 @@
 <view class="container">
   <!-- Logo和标题区域 -->
   <view class="header">
-    <view class="logo">🃏</view>
+    <image class="logo" src="./images/logo.png" mode="widthFix"></image>
     <view class="title">开心记分器</view>
     <view class="subtitle">斗地主 · 红五 · 掼蛋</view>
   </view>

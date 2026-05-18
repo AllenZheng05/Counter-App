@@ -1,70 +1,85 @@
-/* pages/join/join.wxss */
-
+/* pages/join/join.wxss 商务深色统一版 */
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 40rpx;
-  background-color: #f5f5f5;
+  padding: 30rpx;
+  background-color: #121826;
+  box-sizing: border-box;
 }
 
-/* Header 区域 */
+/* 顶部头部区域 */
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40rpx 0 60rpx;
+  padding: 30rpx 0 45rpx;
 }
 
-.icon {
-  font-size: 100rpx;
-  margin-bottom: 20rpx;
+/* 统一图片样式 */
+.house-img{
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 16rpx;
 }
 
 .title {
-  font-size: 44rpx;
-  font-weight: bold;
-  color: #1a1a2e;
-  margin-bottom: 12rpx;
+  font-size: 42rpx;
+  font-weight: 700;
+  color: #F1F5F9;
+  margin-bottom: 8rpx;
+  letter-spacing: 1rpx;
 }
 
 .subtitle {
-  font-size: 28rpx;
-  color: #999999;
+  font-size: 26rpx;
+  color: #94A3B8;
 }
 
-/* 表单区域 */
+/* 表单整体 */
 .form-section {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
+/* 统一商务卡片样式 */
 .form-item {
-  margin-bottom: 32rpx;
+  margin-bottom: 26rpx;
+}
+.card {
+  background-color: #1E293B;
+  border-radius: 14rpx;
+  padding: 28rpx;
+  box-shadow: 0 3rpx 10rpx rgba(0, 0, 0, 0.18);
 }
 
 .form-label {
-  font-size: 28rpx;
+  font-size: 27rpx;
   font-weight: 600;
-  color: #333333;
+  color: #E2E8F0;
   margin-bottom: 16rpx;
 }
 
 /* 邀请码输入框 */
 .code-input-wrapper {
-  background-color: #ffffff;
-  border: 3rpx solid #1a1a2e;
-  border-radius: 16rpx;
-  padding: 24rpx 32rpx;
+  background-color: #273444;
+  border: 2rpx solid #334155;
+  border-radius: 10rpx;
+  padding: 20rpx 24rpx;
 }
 
 .code-input {
-  font-size: 48rpx;
+  font-size: 44rpx;
   font-weight: bold;
   text-align: center;
   letter-spacing: 12rpx;
-  color: #1a1a2e;
+  color: #F1F5F9;
+}
+
+.code-input::placeholder {
+  color: #64748B;
+  letter-spacing: 2rpx;
 }
 
 .code-display {
@@ -74,44 +89,50 @@
 }
 
 .code-text {
-  font-size: 56rpx;
+  font-size: 52rpx;
   font-weight: bold;
-  color: #1a1a2e;
+  color: #3B82F6;
   letter-spacing: 16rpx;
-  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 /* 加入按钮 */
 .action-section {
-  margin-top: 60rpx;
-  margin-bottom: 40rpx;
+  margin-top: 40rpx;
+  margin-bottom: 30rpx;
 }
 
-.btn-join {
+.btn-primary {
   width: 100%;
-  height: 100rpx;
-  font-size: 36rpx;
+  height: 94rpx;
+  font-size: 34rpx;
   font-weight: 600;
-  border-radius: 16rpx;
+  border-radius: 14rpx;
+  background: linear-gradient(135deg,#2563EB,#1D4ED8);
+  color: #ffffff;
+  border: none;
+  transition: all 0.2s ease;
+}
+.btn-primary::after{
+  border: none;
+}
+.btn-primary:active {
+  transform: scale(0.97);
+  opacity: 0.92;
 }
 
 /* 提示文字 */
 .tips {
   display: flex;
   flex-direction: column;
-  gap: 16rpx;
-  padding: 32rpx;
-  background-color: #f0f4ff;
-  border-radius: 16rpx;
+  gap: 12rpx;
+  padding: 24rpx;
+  background-color: rgba(30, 41, 59, 0.6);
+  border-radius: 14rpx;
 }
-
 .tip-text {
-  font-size: 24rpx;
-  color: #666666;
-  line-height: 1.6;
+  font-size: 23rpx;
+  color: #94A3B8;
+  line-height: 1.5;
 }
 
 /* 没有邀请码 */
@@ -122,15 +143,12 @@
   margin-top: 40rpx;
   gap: 12rpx;
 }
-
 .no-code-text {
   font-size: 28rpx;
-  color: #999999;
+  color: #94A3B8;
 }
-
 .no-code-link {
   font-size: 28rpx;
-  color: #1a1a2e;
+  color: #3B82F6;
   font-weight: 600;
-  text-decoration: underline;
 }

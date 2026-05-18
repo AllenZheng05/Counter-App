@@ -1,107 +1,152 @@
-/* pages/create/create.wxss */
-
+/* pages/create/create.wxss 商务深色统一版 */
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 40rpx;
-  background-color: #f5f5f5;
+  padding: 30rpx;
+  background-color: #121826;
+  box-sizing: border-box;
 }
 
-/* Header 区域 */
+/* 顶部头部区域 */
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40rpx 0 60rpx;
+  padding: 30rpx 0 45rpx;
 }
 
 .icon {
-  font-size: 100rpx;
-  margin-bottom: 20rpx;
+  font-size: 90rpx;
+  margin-bottom: 16rpx;
+  color: #3b82f6;
 }
 
 .title {
-  font-size: 44rpx;
-  font-weight: bold;
-  color: #1a1a2e;
-  margin-bottom: 12rpx;
+  font-size: 42rpx;
+  font-weight: 700;
+  color: #F1F5F9;
+  margin-bottom: 8rpx;
+  letter-spacing: 1rpx;
 }
 
 .subtitle {
-  font-size: 28rpx;
-  color: #999999;
+  font-size: 26rpx;
+  color: #94A3B8;
 }
 
-/* 表单区域 */
+/* 表单整体 */
 .form-section {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
+/* 统一商务卡片样式 */
 .form-item {
-  margin-bottom: 32rpx;
+  margin-bottom: 26rpx;
+}
+.card {
+  background-color: #1E293B;
+  border-radius: 14rpx;
+  padding: 28rpx;
+  box-shadow: 0 3rpx 10rpx rgba(0, 0, 0, 0.18);
 }
 
 .form-label {
-  font-size: 28rpx;
+  font-size: 27rpx;
   font-weight: 600;
-  color: #333333;
+  color: #E2E8F0;
   margin-bottom: 16rpx;
 }
 
-.char-count {
-  font-size: 24rpx;
-  color: #999999;
-  text-align: right;
-  margin-top: 8rpx;
+/* 房间名输入框 */
+.input-field {
+  width: 100%;
+  height: 84rpx;
+  background-color: #273444;
+  border-radius: 10rpx;
+  padding: 0 22rpx;
+  font-size: 29rpx;
+  color: #F1F5F9;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+.input-field::placeholder {
+  color: #64748B;
 }
 
-/* 选择器样式 */
+.char-count {
+  font-size: 23rpx;
+  color: #64748B;
+  text-align: right;
+  margin-top: 10rpx;
+}
+
+/* 人数选择器 */
 .picker-display {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20rpx 0;
-}
-
-.picker-display text {
-  font-size: 32rpx;
-  color: #1a1a2e;
-}
-
-.picker-arrow {
-  font-size: 36rpx;
-  color: #cccccc !important;
-}
-
-/* 操作区域 */
-.action-section {
-  margin-top: 60rpx;
-  margin-bottom: 40rpx;
-}
-
-.btn-create {
   width: 100%;
-  height: 100rpx;
-  font-size: 36rpx;
-  font-weight: 600;
-  border-radius: 16rpx;
+  height: 84rpx;
+  padding: 0 22rpx;
+  background-color: #273444;
+  border-radius: 10rpx;
+  box-sizing: border-box;
+}
+.picker-display text {
+  font-size: 29rpx;
+  color: #F1F5F9;
+}
+.picker-arrow {
+  font-size: 34rpx;
+  color: #64748B !important;
 }
 
-/* 提示文字 */
+/* 创建按钮区域 */
+.action-section {
+  margin-top: 40rpx;
+  margin-bottom: 30rpx;
+}
+.btn-primary {
+  width: 100%;
+  height: 94rpx;
+  font-size: 34rpx;
+  font-weight: 600;
+  border-radius: 14rpx;
+  background: linear-gradient(135deg,#2563EB,#1D4ED8);
+  color: #ffffff;
+  border: none;
+  transition: all 0.2s ease;
+}
+.btn-primary::after{
+  border: none;
+}
+.btn-primary:active {
+  transform: scale(0.97);
+  opacity: 0.92;
+}
+
+/* 底部提示文案 轻量化优化 */
 .tips {
   display: flex;
   flex-direction: column;
-  gap: 16rpx;
-  padding: 32rpx;
-  background-color: #f0f4ff;
-  border-radius: 16rpx;
+  gap: 12rpx;
+  padding: 24rpx;
+  background-color: rgba(30, 41, 59, 0.6);
+  border-radius: 14rpx;
+}
+.tip-text {
+  font-size: 23rpx;
+  color: #94A3B8;
+  line-height: 1.5;
 }
 
-.tip-text {
-  font-size: 24rpx;
-  color: #666666;
-  line-height: 1.6;
+/* 自定义顶部屋子图片样式 */
+.house-img{
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 16rpx;
 }

@@ -16,9 +16,11 @@
   padding: 60rpx 0;
 }
 
-.logo {
-  font-size: 120rpx;
-  margin-bottom: 20rpx;
+/* 自定义顶部屋子图片样式 */
+.logo{
+  width: 250rpx;
+  height: 180rpx;
+  margin-bottom: 16rpx;
 }
 
 .title {

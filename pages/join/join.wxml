@@ -1,7 +1,7 @@
 <!--pages/join/join.wxml-->
 <view class="container">
   <view class="header">
-    <view class="icon">🚪</view>
+    <image class="house-img" src="./images/house.png" mode="widthFix"></image>
     <view class="title">加入房间</view>
     <view class="subtitle">输入好友分享的邀请码加入房间</view>
   </view>

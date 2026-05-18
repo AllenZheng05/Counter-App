@@ -1,7 +1,7 @@
 <!--pages/create/create.wxml-->
 <view class="container">
   <view class="header">
-    <view class="icon">🏠</view>
+    <image class="house-img" src="./images/house.png" mode="widthFix"></image>
     <view class="title">创建房间</view>
     <view class="subtitle">创建一个房间，邀请好友加入</view>
   </view>

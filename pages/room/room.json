@@ -1,4 +1,8 @@
 {
   "usingComponents": {},
+<<<<<<< HEAD
   "navigationBarTitleText": "🃏开心计分器"
+=======
+  "navigationBarTitleText": "开心计分器"
+>>>>>>> b6d41d8 (更新所有界面以及图标)
 }
