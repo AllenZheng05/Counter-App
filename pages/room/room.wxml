@@ -3,29 +3,25 @@
   <!-- 广告位 -->
   <view class="ad-banner-wrapper">
     <view class="custom-banner" wx:if="{{showCustomBanner}}">
-      <text class="custom-banner-text">🃏 开心记分器</text>
+      <text class="custom-banner-text">禁止赌博</text>
     </view>
     <ad wx:else unit-id="your-ad-unit-id" ad-type="banner" bindload="onAdLoad" binderror="onAdError"></ad>
   </view>
 
-  <!-- 顶部房间信息 -->
-  <view class="room-header">
-    <view class="room-info">
-      <view class="room-name">{{roomName}}</view>
-      <view class="room-code" bindtap="copyInviteCode">
-        <text>房间号：{{inviteCode}}</text>
-        <text class="copy-icon">📋</text>
-      </view>
+<!-- 顶部房间信息 → 新版排版 -->
+<view class="room-header">
+  <!-- 房间名称（居中） -->
+  <view class="room-name">{{roomName}}</view>
+  <!-- 第二行：左侧房间码 + 右侧离开按钮 -->
+  <view class="room-bottom-row">
+    <view class="room-code" bindtap="copyInviteCode">
+      <text>房间号：{{inviteCode}}</text>
+      <text class="copy-icon">📋</text>
     </view>
-    <view class="room-actions">
-      <button class="icon-btn" bindtap="shareRoom" open-type="share">
-        <text>📤</text>
-      </button>
-      <button class="icon-btn" bindtap="leaveRoom">
-        <text>🚪</text>
-      </button>
-    </view>
+    <!-- 纯文字离开按钮 → 无椭圆、无图标 -->
+    <text class="text-leave-btn" bindtap="leaveRoom">离开房间</text>
   </view>
+</view>
 
   <!-- 计分表格区域 -->
   <view class="score-table-section">
